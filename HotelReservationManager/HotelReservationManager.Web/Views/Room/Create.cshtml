@@ -1,0 +1,64 @@
+﻿@model HotelReservationManager.ViewModels.ReservationViewModel.ReservationViewModel
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Create Room</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Reservations</li>
+        <li class="breadcrumb-item active">Create</li>
+    </ol>
+    <form class="mx-auto half-width" method="post" asp-controller="Reservation" asp-action="Create">
+        <div class="form-group">
+            <label asp-for="Room">Room</label>
+            <input asp-for="Room" class="form-control" value="">
+            <span asp-validation-for="Room" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User">User</label>
+            <input asp-for="User" class="form-control" value="">
+            <span asp-validation-for="User" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <select asp-for="Clients"
+                    asp-items="@(new SelectList(Model.Clients,"Id","FirstName", "ThirdName"))">
+                <option>Please select one</option>
+            </select>
+
+            <input type="submit" />
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate">Start Date</label>
+            <input asp-for="StartDate" class="form-control" value="">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">Start Date</label>
+            <input asp-for="EndDate" class="form-control" value="">
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Breakfast">Start Date</label>
+            <input asp-for="Breakfast" class="form-control" value="">
+            <span asp-validation-for="Breakfast" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AllInclusive">Start Date</label>
+            <input asp-for="AllInclusive" class="form-control" value="">
+            <span asp-validation-for="AllInclusive" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price">Start Date</label>
+            <input asp-for="Price" class="form-control" value="">
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <hr>
+        <div class="button-holder mt-2 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <hr>
+    </form>
+</div>
+

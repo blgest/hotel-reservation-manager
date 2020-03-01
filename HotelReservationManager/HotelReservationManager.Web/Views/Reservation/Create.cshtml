@@ -1,0 +1,64 @@
+﻿@model HotelReservationManager.ViewModels.RoomViewModels.CreateRoomViewModel
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Create Room</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Rooms</li>
+        <li class="breadcrumb-item active">Create</li>
+    </ol>
+    <form class="mx-auto half-width" method="post" asp-controller="Room" asp-action="Create">
+        <div class="form-group">
+            <label asp-for="Capacity">Capacity</label>
+            <input asp-for="Capacity" class="form-control" value="">
+            <span asp-validation-for="Capacity" class="text-danger"></span>
+        </div>
+        <h4 class="text-center">Room Type</h4>
+        <div class="row mt-4">
+            <div class="col">
+                <input type="radio" id="twin" value="Twin" asp-for="Type">
+                <label>Twin</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="apartment" value="Apartment" asp-for="Type">
+                <label>Apartment</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="double" value="Double" asp-for="Type">
+                <label>Double</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="penthhouse" value="Penthhouse" asp-for="Type">
+                <label>Penthhouse</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="maisonette" value="Maisonette" asp-for="Type">
+                <label>Maisonette</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PriceOnBedForAdult">Price On Bed For Adult</label>
+            <input asp-for="PriceOnBedForAdult" class="form-control" value="">
+            <span asp-validation-for="PriceOnBedForAdult" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PriceOnBedForChildren">Price On Bed For Children</label>
+            <input asp-for="PriceOnBedForChildren" class="form-control" value="">
+            <span asp-validation-for="PriceOnBedForChildren" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Number">Number</label>
+            <input asp-for="Number" class="form-control" value="">
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+        <hr>
+        <div class="button-holder mt-2 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <hr>
+    </form>
+</div>
+

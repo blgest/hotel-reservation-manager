@@ -1,0 +1,10 @@
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.deps.json
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.runtimeconfig.json
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.runtimeconfig.dev.json
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.csprojAssemblyReference.cache
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.AssemblyInfoInputs.cache
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.AssemblyInfo.cs
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb

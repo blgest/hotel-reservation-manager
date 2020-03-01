@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using HotelReservationManager.Data.Models
+
+@inject SignInManager<HotelUser> SignInManager
+@inject UserManager<HotelUser> UserManager
+
+@model HotelReservationManager.ViewModels.UserViewModels.BlockedUsersListViewModel
+
+<div class="container">
+
+    <h1 class="mt-4 mb-3">Blocked Users</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Users</li>
+        <li class="breadcrumb-item active">Blocked</li>
+    </ol>
+
+    @foreach (var activeUser in Model.Users)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2 class="card-title">@activeUser.Username</h2>
+                        <p>@activeUser.FirstName @activeUser.SecondName @activeUser.ThirdName</p>
+                        <p>@activeUser.UCN</p>
+                        <p>@activeUser.PhoneNumber</p>
+                        <p>@activeUser.Email</p>
+                        <p>@activeUser.StartDate</p>
+                        <p>@activeUser.EndDate</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <a class="btn btn-primary" asp-controller="HotelUser" asp-action="EditBlockedUser" asp-route-id="@activeUser.Id">Edit</a>
+                <a class="btn btn-primary" asp-controller="HotelUser" asp-action="Activate" asp-route-id="@activeUser.Id">Activate</a>
+            </div>
+        </div>
+    }
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

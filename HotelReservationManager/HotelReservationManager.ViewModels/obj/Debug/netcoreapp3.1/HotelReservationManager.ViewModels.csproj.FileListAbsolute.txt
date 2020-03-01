@@ -1,0 +1,15 @@
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.deps.json
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.pdb
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Services.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Services.pdb
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.pdb
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.csprojAssemblyReference.cache
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.AssemblyInfoInputs.cache
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.AssemblyInfo.cs
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.csproj.CopyComplete
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.dll
+C:\Users\Blagovest\Desktop\HotelReservationManager\HotelReservationManager.ViewModels\obj\Debug\netcoreapp3.1\HotelReservationManager.ViewModels.pdb
