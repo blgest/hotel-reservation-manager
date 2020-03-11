@@ -11,7 +11,7 @@ namespace HotelReservationManager.Data.Models
             Id = id;
             Capacity = capacity;
             Type = type;
-            this.IsFree = isFree;
+            IsFree = isFree;
             PriceOnBedAdult = priceOnBedAdult;
             PriceOnBedChildren = priceOnBedChildren;
             Number = number;

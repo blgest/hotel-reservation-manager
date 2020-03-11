@@ -11,10 +11,11 @@ namespace HotelReservationManager.Services.Contracts
 
         void Delete(string roomId);
 
-        void Edit(string id, int capacity, RoomType type, double priceOnBedAdult,
-           double priceOnBedChildren, int number);
+        void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number);
 
-        IEnumerable<Room> GetAll();
+        List<Room> GetAll();
+
+        List<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type);
 
         Room GetById(string id);
     }

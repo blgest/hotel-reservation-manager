@@ -150,11 +150,17 @@ namespace HotelReservationManager.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("AdultsCount")
+                        .HasColumnType("int");
+
                     b.Property<bool>("AllInclusive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Breakfast")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ChildrensCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -164,6 +170,9 @@ namespace HotelReservationManager.Data.Migrations
 
                     b.Property<string>("RoomId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RoomType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -188,6 +197,9 @@ namespace HotelReservationManager.Data.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsFree")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
@@ -199,9 +211,6 @@ namespace HotelReservationManager.Data.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isFree")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

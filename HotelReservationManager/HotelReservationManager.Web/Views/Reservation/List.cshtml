@@ -1,61 +1,68 @@
-﻿@model HotelReservationManager.ViewModels.RoomViewModels.RoomsListViewModel
+﻿@model HotelReservationManager.ViewModels.ReservationViewModels.ReservationsListViewModel
 
-    <div class="container">
+<div class="container">
 
-        <h1 class="mt-4 mb-3">Rooms</h1>
+    <h1 class="mt-4 mb-3">Reservations</h1>
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a asp-controller="Home" asp-action="Index">My Hotel</a>
-            </li>
-            <li class="breadcrumb-item active">Rooms</li>
-        </ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">List</li>
+    </ol>
 
-        @foreach (var room in Model.Rooms)
-        {
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h2 class="card-title">Room Number: @room.Number</h2>
-                            <p>Type: @room.Type</p>
-                            <p>Capacity: @room.Capacity</p>
-                            <p>Is Free: @room.IsFree</p>
-                            <p>Price On Bed For Adult: @room.PriceOnBedForAdult</p>
-                            <p>Price On Bed For Children: @room.PriceOnBedForChildren</p>
-                        </div>
+    @foreach (var reservation in Model.Reservations)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="card-title">Period: @reservation.StartDate.ToShortDateString() - @reservation.EndDate.Date.ToShortDateString()</h3>
+                        <p>Room Number: @reservation.Room.Number</p>
+                        <p>Registrated By: @reservation.HotelUser</p>
+                        <p>Adults Count: @reservation.AdultsCount</p>
+                        <p>Childrens Count: @reservation.ChildrensCount</p>
+                        <p>Breakfast: @reservation.Breakfast</p>
+                        <p>All inclusive: @reservation.AllInclusive</p>
+                        <p>Price: @reservation.Price lv</p>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <a class="btn btn-primary" asp-controller="Room" asp-action="Edit" asp-route-id="@room.Id">Edit</a>
-                    <a class="btn btn-primary" asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">Delete</a>
-                </div>
             </div>
-        }
+            <div class="card-footer text-muted">
+                @if (reservation.ClientsReservations.Count == 0)
+                {
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="AddClients" asp-route-id="@reservation.Id">Add Clients</a>
+                }
+                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Details" asp-route-id="@reservation.Id">Details</a>
+                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Edit" asp-route-id="@reservation.Id">Edit</a>
+                <a class="btn btn-primary" asp-controller="Reservation" asp-action="Delete" asp-route-id="@reservation.Id">Delete</a>
+            </div>
+        </div>
+    }
 
 
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
 
-    </div>
+</div>

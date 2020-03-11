@@ -20,6 +20,10 @@ namespace HotelReservationManager.Services
             this.dbContext = dbContext;
         }
 
+        public bool AreThereAnyUsers()
+        {
+            return this.dbContext.Users.Count() > 0;
+        }
 
         public void Block(string hotelUserId)
         {
@@ -62,6 +66,15 @@ namespace HotelReservationManager.Services
             dbContext.SaveChanges();
         }
 
+        public HotelUser GetCurrent(string concurrencyStamp)
+        {
+            var hotelUser = this.dbContext
+                .Users
+                .FirstOrDefault(x => x.ConcurrencyStamp == concurrencyStamp);
+
+            return hotelUser;
+        }
+
         public IEnumerable<HotelUser> GetAllActive()
         {
             var actives = this.dbContext
@@ -85,26 +98,6 @@ namespace HotelReservationManager.Services
         public HotelUser GetById(string id)
         {
             return this.dbContext.Users.Find(id);
-        }
-
-        private string GetHashPassword(string password)
-        {
-            byte[] salt = new byte[128 / 8];
-
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-            return hashed;
         }
     }
 }

@@ -18,11 +18,6 @@ namespace HotelReservationManager.Web.Controllers
             this.roomService = roomService;
         }
 
-        public IActionResult Index()
-        {
-            return this.View();
-        }
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -81,7 +76,7 @@ namespace HotelReservationManager.Web.Controllers
 
         private void TransferRoomsToViewModel(List<RoomViewModel> list)
         {
-            foreach (var room in this.roomService.GetAll())
+            foreach (var room in this.roomService.GetAll().OrderBy(x=>x.Number))
             {
                 var roomViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.IsFree, room.PriceOnBedAdult,
                 room.PriceOnBedChildren, room.Number);

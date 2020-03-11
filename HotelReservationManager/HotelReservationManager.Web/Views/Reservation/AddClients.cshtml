@@ -1,0 +1,87 @@
+﻿@model HotelReservationManager.ViewModels.ReservationViewModels.AddClientsViewModel
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Add Clients to Reservation</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Reservation</li>
+        <li class="breadcrumb-item active">Add Clients</li>
+    </ol>
+    <form class="mx-auto half-width" method="post" asp-controller="Reservation" asp-action="AddClients">
+
+        @if (Model.AdultsCount > 0)
+        {
+            <div class="form-group">
+                <label>You must select @Model.AdultsCount adults:</label>
+                <select id="adults" class="form-control" asp-for="Adults" multiple>
+                    @foreach (var adult in Model.Adults)
+                    {
+                        <option value="@adult.Id">@adult.FirstName @adult.ThirdName @adult.Email</option>
+                    }
+                </select>
+                <span asp-validation-for="Adults" class="text-danger"></span>
+            </div>
+        }
+
+        @if (Model.ChildrensCount > 0)
+        {
+            <div class="form-group">
+                <label>You must select @Model.ChildrensCount childrens:</label>
+                <select id="childrens" class="form-control" asp-for="Childrens" multiple>
+                    @foreach (var children in Model.Childrens)
+                    {
+                        <option value="@children.Id">@children.FirstName @children.ThirdName @children.Email</option>
+                    }
+                </select>
+                <span asp-validation-for="Childrens" class="text-danger"></span>
+            </div>
+        }
+
+        <hr>
+        <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
+            <a class="btn btn-primary" asp-controller="Reservation" asp-action="List">Back</a>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+        <hr>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    var adultsCount = "@Model.AdultsCount";
+    var childrensCount = "@Model.ChildrensCount";
+
+    $(document).ready(function() {
+
+          var last_valid_selection = null;
+
+          $('#adults').change(function(event) {
+            if ($(this).val().length > adultsCount) {
+
+              $(this).val(last_valid_selection);
+            } else {
+              last_valid_selection = $(this).val();
+            }
+          });
+    });
+
+    $(document).ready(function() {
+
+          var last_valid_selection = null;
+
+          $('#childrens').change(function(event) {
+            if ($(this).val().length > childrensCount) {
+
+              $(this).val(last_valid_selection);
+            } else {
+              last_valid_selection = $(this).val();
+            }
+          });
+    });
+</script>
+

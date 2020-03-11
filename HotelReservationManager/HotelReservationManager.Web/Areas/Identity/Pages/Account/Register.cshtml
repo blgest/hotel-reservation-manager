@@ -1,71 +1,75 @@
 ﻿@page
 @model RegisterModel
 
-    <div class="container">
+<div class="container">
 
-        @if (!this.User.IsInRole("Admin"))
-        {
-            <h1 class="mt-4 mb-3">Create Admin</h1>
-        }
-        else
-        {
-            <h1 class="mt-4 mb-3">Create Users</h1>
-        }
+    @if (!this.User.IsInRole("Admin"))
+    {
+        <h1 class="mt-4 mb-3">Create Admin</h1>
+    }
+    else
+    {
+        <h1 class="mt-4 mb-3">Create Users</h1>
+    }
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">Inital Create</li>
-        </ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inital Create</li>
+    </ol>
 
-        <form class="mx-auto half-width" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div class="form-group">
-                <label asp-for="Input.Username"></label>
-                <input asp-for="Input.Username" class="form-control">
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control">
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.SecondName"></label>
-                <input asp-for="Input.SecondName" class="form-control">
-                <span asp-validation-for="Input.SecondName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ThirdName"></label>
-                <input asp-for="Input.ThirdName" class="form-control">
-                <span asp-validation-for="Input.ThirdName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.UCN"></label>
-                <input asp-for="Input.UCN" class="form-control">
-                <span asp-validation-for="Input.UCN" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control">
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control">
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <hr>
-            <div class="button-holder mt-2 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-            <hr>
-        </form>
-    </div>
+    <form class="mx-auto half-width" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div class="form-group">
+            <label asp-for="Input.Username"></label>
+            <input asp-for="Input.Username" class="form-control">
+            <span asp-validation-for="Input.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password"></label>
+            <input asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword"></label>
+            <input asp-for="Input.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.FirstName"></label>
+            <input asp-for="Input.FirstName" class="form-control">
+            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.SecondName"></label>
+            <input asp-for="Input.SecondName" class="form-control">
+            <span asp-validation-for="Input.SecondName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.ThirdName"></label>
+            <input asp-for="Input.ThirdName" class="form-control">
+            <span asp-validation-for="Input.ThirdName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.UCN"></label>
+            <input asp-for="Input.UCN" class="form-control">
+            <span asp-validation-for="Input.UCN" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.PhoneNumber"></label>
+            <input asp-for="Input.PhoneNumber" class="form-control">
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Email"></label>
+            <input asp-for="Input.Email" class="form-control">
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <hr>
+        <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
+            @if (this.User.IsInRole("Admin"))
+            {
+                <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back</a>
+            }
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <hr>
+    </form>
+</div>

@@ -1,75 +1,164 @@
-﻿@model HotelReservationManager.ViewModels.RoomViewModels.RoomViewModel
+﻿@model HotelReservationManager.ViewModels.ReservationViewModels.ReservationViewModel
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<div class="container">
+    <h1 class="mt-4 mb-3">Edit Reservation</h1>
 
-    <div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Reservation</li>
+        <li class="breadcrumb-item active">Edit</li>
+    </ol>
+    <form class="mx-auto half-width" method="post" asp-controller="Reservation" asp-action="Edit">
 
-        <h1 class="mt-4 mb-3">Edit Client</h1>
+        <div class="form-group">
+            <label asp-for="AdultsCount">Adults Count</label>
+            <input id="adults" asp-for="AdultsCount" class="form-control" value="@Model.AdultsCount">
+            <span asp-validation-for="AdultsCount" class="text-danger"></span>
+        </div>
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a asp-controller="Home" asp-action="Index">My Hotel</a>
-            </li>
-            <li class="breadcrumb-item active">Rooms</li>
-            <li class="breadcrumb-item active">Edit</li>
-        </ol>
+        <div class="form-group">
+            <label asp-for="ChildrensCount">Childrens Count</label>
+            <input id="childrens" asp-for="ChildrensCount" class="form-control" value="@Model.ChildrensCount">
+            <span asp-validation-for="ChildrensCount" class="text-danger"></span>
+        </div>
 
-        <form class="mx-auto half-width" method="post" asp-controller="Room" asp-action="Edit">
+        <div class="form-group">
+            <label asp-for="StartDate">Start Date</label>
+            <input id="startDate" asp-for="StartDate" type="date" class="form-control">
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndDate">End Date</label>
+            <input id="endDate" asp-for="EndDate" type="date" class="form-control">
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+
+        <h4 class="text-center">Room Type</h4>
+        <div class="row mt-4">
+            <div class="col">
+                <input type="radio" id="twin" value="Twin" asp-for="RoomType" name="roomType">
+                <label>Twin</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="apartment" value="Apartment" asp-for="RoomType" name="roomType">
+                <label>Apartment</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="double" value="Double" asp-for="RoomType" name="roomType">
+                <label>Double</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="penthhouse" value="Penthhouse" asp-for="RoomType" name="roomType">
+                <label>Penthhouse</label>
+            </div>
+            <div class="col">
+                <input type="radio" id="maisonette" value="Maisonette" asp-for="RoomType" name="roomType">
+                <label>Maisonette</label>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="form-group">
+            <label asp-for="Breakfast">Breakfast</label>
+            <input asp-for="Breakfast" type="text" class="form-control" value="@Model.Breakfast">
+            <span asp-validation-for="Breakfast" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AllInclusive">All Inclusive</label>
+            <input asp-for="AllInclusive" type="text" class="form-control" value="@Model.AllInclusive">
+            <span asp-validation-for="AllInclusive" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rooms">Rooms:</label>
             <div class="form-group">
-                <label asp-for="Capacity">Capacity</label>
-                <input asp-for="Capacity" class="form-control" value="@Model.Capacity">
-                <span asp-validation-for="Capacity" class="text-danger"></span>
+                <select id="rooms" name="Rooms">
+                    <option id="selected" value="@Model.Room.Id">@Model.Room.Number</option>
+                    @foreach (var room in Model.Rooms)
+                    {
+                        if (room.Id != Model.Room.Id)
+                        {
+                            <option value="@room.Id">@room.Number @room.Type</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="Rooms" class="text-danger"></span>
             </div>
-            <h4 class="text-center">Room Type</h4>
-            <div class="row mt-4">
-                <div class="col">
-                    <input type="radio" id="twin" value="Twin" asp-for="Type">
-                    <label>Twin</label>
-                </div>
-                <div class="col">
-                    <input type="radio" id="apartment" value="Apartment" asp-for="Type">
-                    <label>Apartment</label>
-                </div>
-                <div class="col">
-                    <input type="radio" id="double" value="Double" asp-for="Type">
-                    <label>Double</label>
-                </div>
-                <div class="col">
-                    <input type="radio" id="penthhouse" value="Penthhouse" asp-for="Type">
-                    <label>Penthhouse</label>
-                </div>
-                <div class="col">
-                    <input type="radio" id="maisonette" value="Maisonette" asp-for="Type">
-                    <label>Maisonette</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsFree">Is Free</label>
-                <input  type="text" asp-for="IsFree" class="form-control" value="@Model.IsFree">
-                <span asp-validation-for="IsFree" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PriceOnBedForAdult">Price On Bed For Adult</label>
-                <input asp-for="PriceOnBedForAdult" class="form-control" value="@Model.PriceOnBedForAdult">
-                <span asp-validation-for="PriceOnBedForAdult" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PriceOnBedForChildren">Price On Bed For Children</label>
-                <input asp-for="PriceOnBedForChildren" class="form-control" value="@Model.PriceOnBedForChildren">
-                <span asp-validation-for="PriceOnBedForChildren" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Number">Number</label>
-                <input asp-for="Number" class="form-control" value="@Model.Number">
-                <span asp-validation-for="Number" class="text-danger"></span>
-            </div>
-            <hr>
-            <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
-                <button type="submit" class="btn btn-primary">Edit</button>
-                <button type="submit" class="btn btn-primary">Cancel</button>
-            </div>
-            <hr>
-        </form>
-    </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price">Price:</label>
+            <input asp-for="Price" value="Price" id="price" class="form-control" readonly="readonly">
+        </div>
+
+        <hr />
+        <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
+            <button type="submit" class="btn btn-primary">Back</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+        <hr />
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    var startDt = document.getElementById("startDate");
+    var endDt = document.getElementById("endDate");
+    var adults = document.getElementById("adults");
+    var childrens = document.getElementById("childrens");
+    var price = document.getElementById("price");
+    var rooms = document.getElementById("rooms");
+    var room = document.getElementById("selected").value;
+
+    function calculatePrice() {
+        $.ajax({
+            url: "/Reservation/CalculatePrice",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            data: {
+                adultsCount: adults.value,
+                childrensCount: childrens.value,
+                roomId: room,
+                startDate: startDt.value,
+                endDate: endDt.value
+            },
+            success: function (calcPrice) {
+                price.value = calcPrice;
+            },
+            error: function (response) {
+                debugger;
+                alert('eror');
+            }
+        });
+    }
+
+    adults.addEventListener('change', function () {
+        calculatePrice()
+    });
+
+    childrens.addEventListener('change', function () {
+        calculatePrice()
+    });
+
+    startDt.addEventListener('change', function () {
+        calculatePrice()
+    });
+
+    endDt.addEventListener('change', function () {
+        calculatePrice()
+    });
+
+    rooms.addEventListener('change', (e) => {
+        room = e.target.value;
+        calculatePrice();
+    });
+</script>
+

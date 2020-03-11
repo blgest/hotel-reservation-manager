@@ -18,8 +18,6 @@ namespace HotelReservationManager.Services.Contracts
 
         Client GetById(string id);
 
-        //TO-DO reuse client data
-
-        //client reservations
+        Client GetByEmail(string email);
     }
 }

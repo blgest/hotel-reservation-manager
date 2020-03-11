@@ -12,17 +12,21 @@ namespace HotelReservationManager.Data.Models
 
         public HotelUser User { get; set; }
 
+        public int AdultsCount { get; set; }
+
+        public int ChildrensCount { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public RoomType RoomType { get; set; }
 
         public bool Breakfast { get; set; }
 
         public bool AllInclusive { get; set; }
 
         public double Price { get; set; }
-
-        public List<Client> Clients { get; set; }
 
         public ICollection<ClientReservations> ClientsReservations { get; set; }
     }

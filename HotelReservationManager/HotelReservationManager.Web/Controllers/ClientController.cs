@@ -13,17 +13,10 @@ namespace HotelReservationManager.Web.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService clientService;
-        private readonly IHotelUserService hotelUserService;
 
-        public ClientController(IClientService clientService, IHotelUserService hotelUserService)
+        public ClientController(IClientService clientService)
         {
             this.clientService = clientService;
-            this.hotelUserService = hotelUserService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -35,12 +28,14 @@ namespace HotelReservationManager.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel, string userId)
+        public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel)
         {
             this.clientService.Create(
-            createClientViewModel.FirstName,
-            createClientViewModel.ThirdName,
-            createClientViewModel.PhoneNumber, createClientViewModel.Email, createClientViewModel.Years);
+                createClientViewModel.FirstName,
+                createClientViewModel.ThirdName,
+                createClientViewModel.PhoneNumber,
+                createClientViewModel.Email,
+                createClientViewModel.Years);
 
             return this.RedirectToAction("List");
         }
@@ -85,7 +80,7 @@ namespace HotelReservationManager.Web.Controllers
 
         private void TransferClientsToViewModel(List<ClientViewModel> list)
         {
-            foreach (var client in this.clientService.GetAll())
+            foreach (var client in this.clientService.GetAll().OrderBy(x=>x.FirstName).ThenBy(y=>y.ThirdName))
             {
                 var clientsViewModel = new ClientViewModel(client.Id, client.FirstName,
                     client.ThirdName, client.Telephone, client.Email,

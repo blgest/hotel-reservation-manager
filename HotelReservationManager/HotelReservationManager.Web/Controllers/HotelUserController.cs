@@ -19,11 +19,6 @@ namespace HotelReservationManager.Web.Controllers
             this.hotelUserService = hotelUserService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ActiveList()
@@ -110,7 +105,8 @@ namespace HotelReservationManager.Web.Controllers
 
         private void TransferBlockedUsersToViewModel(List<BlockedUserViewModel> list)
         {
-            foreach (var user in hotelUserService.GetAllBlocked())
+            foreach (var user in hotelUserService.GetAllBlocked().OrderBy(x=>x.FirstName).
+                ThenBy(y=>y.SecondName).ThenBy(z=>z.ThirdName))
             {
                 var blockedUserViewModel = new BlockedUserViewModel(user.Id, user.UserName, user.FirstName,
                     user.SecondName, user.ThirdName, user.UCN, user.PhoneNumber, user.Email,
@@ -122,7 +118,8 @@ namespace HotelReservationManager.Web.Controllers
 
         private void TransferActiveUsersToViewModel(List<ActiveUserViewModel> list)
         {
-            foreach (var user in hotelUserService.GetAllActive())
+            foreach (var user in hotelUserService.GetAllActive().OrderBy(x => x.FirstName).
+                ThenBy(y => y.SecondName).ThenBy(z => z.ThirdName))
             {
                 var activeUserViewModel = new ActiveUserViewModel(user.Id, user.UserName, user.FirstName,
                     user.SecondName, user.ThirdName, user.UCN, user.PhoneNumber, user.Email,

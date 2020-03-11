@@ -7,20 +7,22 @@ namespace HotelReservationManager.Services.Contracts
 {
     public interface IReservationService
     {
-        void Create(Room room, HotelUser hotelUser, IEnumerable<Client> clients, DateTime startDate, 
-            DateTime endDate, bool breakfast, bool allInclusive);
+        void CheckForExpiredReservations();
 
-        double CalculatePrice(IEnumerable<Client> clients, Room room, DateTime startDate, DateTime endDate);
+        void Create(Room room, HotelUser hotelUser, int adultsCount, int childrensCount, DateTime startDate, DateTime endDate,
+            bool breakfast, bool allInclusive, double price, RoomType roomType);
 
-        void Edit(string id, Room room, HotelUser hotelUser, IEnumerable<Client> clients, DateTime startDate,
-            DateTime endDate, bool breakfast, bool allInclusive);
+        double CalculatePrice(int childrensCount, int adultsCount, Room room, DateTime startDate, DateTime endDate);
+
+        void Edit(string id, DateTime startDate, DateTime endDate, int adultsCount, int childrensCount,
+            RoomType roomType, Room room, bool breakfast, bool allInclusive, double price);
 
         void Delete(string reservationId);
+
+        void AddClients(List<Client> clients, string reservationId);
 
         IEnumerable<Reservation> GetAll();
 
         Reservation GetById(string id);
-
-        //delete reservatin when gone endDate
     }
 }

@@ -37,10 +37,13 @@
             <span asp-validation-for="Years" class="text-danger"></span>
         </div>
         <hr>
-        <div class="button-holder mt-2 d-flex justify-content-center">
+        <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
+            <a class="btn btn-primary" asp-controller="Client" asp-action="List">Back</a>
             <button type="submit" class="btn btn-primary">Create</button>
         </div>
         <hr>
     </form>
 </div>
 
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

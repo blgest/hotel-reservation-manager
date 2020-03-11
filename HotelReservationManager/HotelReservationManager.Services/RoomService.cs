@@ -3,6 +3,7 @@ using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HotelReservationManager.Services
@@ -20,12 +21,12 @@ namespace HotelReservationManager.Services
         public void Create(int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number)
         {
             var newRoom = new Room(
-                Guid.NewGuid().ToString(), 
-                capacity, 
+                Guid.NewGuid().ToString(),
+                capacity,
                 type,
-                true, 
-                priceOnBedAdult, 
-                priceOnBedChildren, 
+                true,
+                priceOnBedAdult,
+                priceOnBedChildren,
                 number);
 
             this.dbContext.Rooms.Add(newRoom);
@@ -40,8 +41,7 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        public void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, 
-            double priceOnBedChildren, int number)
+        public void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number)
         {
             var room = GetById(id);
 
@@ -55,10 +55,54 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<Room> GetAll()
+        public List<Room> GetAll()
         {
-            return this.dbContext.Rooms;
+            return this.dbContext.Rooms.ToList();
         }
+
+        public List<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type)
+        {
+            var rooms = new List<Room>();
+
+            rooms = this.dbContext.Rooms
+                .Where(r => r.Capacity >= capacity && r.Type == type)
+                .ToList();
+
+            foreach (var reservation in this.dbContext.Reservations)
+            {
+                if (startDate < reservation.StartDate)
+                {
+                    if (!CheckForPreviosDate(reservation.StartDate, startDate, endDate))
+                    {
+                        rooms.Remove(reservation.Room);
+                    }
+                }
+                else if (startDate > reservation.StartDate)
+                {
+                    if (!CheckForNextDate(startDate, reservation.StartDate, reservation.EndDate))
+                    {
+                        rooms.Remove(reservation.Room);
+                    }
+                }
+                else
+                {
+                    rooms.Remove(reservation.Room);
+                }
+            }
+
+            return rooms;
+        }
+
+        private static bool CheckForNextDate(DateTime k, DateTime x, DateTime y)
+        {
+            return k > x && k >= y;
+        }
+
+        private static bool CheckForPreviosDate(DateTime x, DateTime k, DateTime z)
+        {
+            return k < x && z <= x;
+        }
+
 
         public Room GetById(string id)
         {

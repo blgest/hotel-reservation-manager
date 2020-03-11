@@ -1,12 +1,8 @@
-﻿using HotelReservationManager.Data.Models;
-using HotelReservationManager.Services.Contracts;
-using HotelReservationManager.ViewModels.ClientViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelReservationManager.ViewModels.ReservationViewModel
+namespace HotelReservationManager.ViewModels.ReservationViewModels
 {
     public class ReservationsListViewModel
     {

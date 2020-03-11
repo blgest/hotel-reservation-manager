@@ -1,8 +1,10 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HotelReservationManager.Services
@@ -19,15 +21,15 @@ namespace HotelReservationManager.Services
 
         public void Create(string firstName, string thirdName, string phoneNumber, string email, int years)
         {
-            var client = new Client(
+            var newClient = new Client(
                 Guid.NewGuid().ToString(),
                 firstName,
                 thirdName,
                 phoneNumber,
                 email,
-                years>18 ? true : false);
+                years > 18 ? true : false);
 
-            this.dbContext.Clients.Add(client);
+            this.dbContext.Clients.Add(newClient);
             this.dbContext.SaveChanges();
         }
 
@@ -63,7 +65,15 @@ namespace HotelReservationManager.Services
 
         public Client GetById(string id)
         {
-            return this.dbContext.Clients.Find(id);
+            var clients = this.dbContext.Clients
+                .Include(x => x.ClientsReservations).ToList();
+
+            return clients.FirstOrDefault(x => x.Id == id);
+        }
+
+        public Client GetByEmail(string email)
+        {
+            return this.dbContext.Clients.FirstOrDefault(c => c.Email == email);
         }
     }
 }
