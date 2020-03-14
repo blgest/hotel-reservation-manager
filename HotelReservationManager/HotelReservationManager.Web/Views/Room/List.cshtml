@@ -1,61 +1,202 @@
-﻿@model HotelReservationManager.ViewModels.RoomViewModels.RoomsListViewModel
+﻿<div class="container">
 
-    <div class="container">
+    <h1 class="mt-4 mb-3">Rooms</h1>
 
-        <h1 class="mt-4 mb-3">Rooms</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Rooms</li>
+    </ol>
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a asp-controller="Home" asp-action="Index">My Hotel</a>
-            </li>
-            <li class="breadcrumb-item active">Rooms</li>
-        </ol>
-
-        @foreach (var room in Model.Rooms)
-        {
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h2 class="card-title">Room Number: @room.Number</h2>
-                            <p>Type: @room.Type</p>
-                            <p>Capacity: @room.Capacity</p>
-                            <p>Is Free: @room.IsFree</p>
-                            <p>Price On Bed For Adult: @room.PriceOnBedForAdult</p>
-                            <p>Price On Bed For Children: @room.PriceOnBedForChildren</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <a class="btn btn-primary" asp-controller="Room" asp-action="Edit" asp-route-id="@room.Id">Edit</a>
-                    <a class="btn btn-primary" asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id">Delete</a>
-                </div>
+    <div class="card mb-4">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+            <div class="input-group">
+                <input id="search" type="text" class="form-control" placeholder="Search by Room or Capacity">
             </div>
-        }
+        </div>
+    </div>
 
-
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
+    <div id="rooms">
 
     </div>
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" onclick="prevPage()" id="btn_prev" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" id="page"></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" onclick="nextPage()" id="btn_next" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    const records_per_page = 5;
+
+    var search = document.getElementById("search");
+    var rooms = document.getElementById("rooms");
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var page_number = document.getElementById("page");
+
+    let roomTypeEnum = Object.freeze({ 0: "Twin", 1: "Apartment", 2: "Double", 3: "Penthhouse", 4: "Maisonette" });
+    let current_page = 1;
+    let roomsHTML = [];
+
+    function searchRooms() {
+        $.ajax({
+            url: "/Room/SearchRooms",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            data: {
+                term: search.value
+            },
+            success: function (items) {
+                roomsHTML = [];
+
+                items.forEach(item => {
+                    createRoomCard(item);
+                });
+
+                changePage(current_page);
+            },
+            error: function (response) {
+                debugger;
+                alert('eror');
+            }
+        });
+    }
+
+    function createRoomCard(item) {
+        var card = document.createElement("div");
+        var cardBody = document.createElement("div");
+        var rowStart = document.createElement("div");
+        var sizeInCols = document.createElement("div");
+        var number = document.createElement("h2");
+        var type = document.createElement("p");
+        var capacity = document.createElement("p");
+        var isFree = document.createElement("p");
+        var priceOnBedAdult = document.createElement("p");
+        var priceOnBedChildren = document.createElement("p");
+        var footer = document.createElement("div");
+        var whiteSpace = document.createElement("span");
+        var editButton = document.createElement("a");
+        var deleteButton = document.createElement("a");
+
+        card.className = "card mb-4"
+        cardBody.className = "card-body";
+        rowStart.className = "row";
+        sizeInCols.className = "col-lg-6";
+        number.innerHTML = "Number: " + item.number;
+        type.innerHTML = "Type: " + roomTypeEnum[item.type];
+        capacity.innerHTML = "Capacity: " + item.capacity;
+        isFree.innerHTML = "Is Free: " + item.isFree;
+        priceOnBedAdult.innerHTML = "Price On Bed For Adult Per Day: " + item.priceOnBedForAdult;
+        priceOnBedChildren.innerHTML = "Price On Bed For Adult Per Day: " + item.priceOnBedForChildren;
+        footer.className = "card-footer text-muted";
+        whiteSpace.innerHTML = "&nbsp;";
+        editButton.className = "btn btn-primary";
+        editButton.href = "/Room/Edit/" + item.id;
+        editButton.innerHTML = "Edit"
+        deleteButton.className = "btn btn-primary";
+        deleteButton.href = "/Room/Delete/" + item.id;
+        deleteButton.innerHTML = "Delete";
+
+        card.appendChild(cardBody);
+        cardBody.appendChild(rowStart);
+        rowStart.appendChild(sizeInCols);
+        sizeInCols.appendChild(number);
+        sizeInCols.appendChild(type);
+        sizeInCols.appendChild(capacity);
+        sizeInCols.appendChild(isFree);
+        sizeInCols.appendChild(priceOnBedAdult);
+        sizeInCols.appendChild(priceOnBedChildren);
+        card.appendChild(footer);
+        footer.appendChild(editButton);
+        footer.appendChild(whiteSpace);
+        footer.appendChild(deleteButton);
+
+        roomsHTML.push(card);
+    }
+
+    function removeRooms() {
+        for (var i = rooms.children.length - 1; i >= 0; i--) {
+            rooms.removeChild(rooms.children[i]);
+        }
+    }
+
+    function prevPage() {
+        if (current_page > 1) {
+            current_page--;
+            changePage(current_page);
+        }
+    }
+
+    function nextPage() {
+        if (current_page < numPages()) {
+            current_page++;
+            changePage(current_page);
+        }
+    }
+
+    function changePage(page) {
+        if (page < 1) {
+            page = 1
+        };
+
+        if (page > numPages()) {
+            page = numPages()
+        };
+
+        removeRooms();
+
+        for (var i = (page - 1) * records_per_page; i < (page * records_per_page); i++) {
+            if (roomsHTML.length - 1 >= i && i >= 0) {
+                rooms.appendChild(roomsHTML[i]);
+            }
+        }
+        page_number.innerHTML = page;
+
+        if (page == 1) {
+            btn_prev.style.visibility = "hidden";
+        } else {
+            btn_prev.style.visibility = "visible";
+        }
+
+        if (page == numPages()) {
+            btn_next.style.visibility = "hidden";
+        } else {
+            btn_next.style.visibility = "visible";
+        }
+    }
+
+    function numPages() {
+        return Math.ceil(roomsHTML.length / records_per_page);
+    }
+
+    window.onload = function () {
+        searchRooms();
+        changePage(1);
+    };
+
+    search.addEventListener("input", function () {
+        removeRooms();
+        searchRooms();
+    });
+</script>

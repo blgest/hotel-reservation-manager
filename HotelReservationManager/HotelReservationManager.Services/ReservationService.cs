@@ -121,24 +121,14 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        private void RemoveClients(Reservation reservation)
-        {
-            foreach (var clientReservations in reservation.ClientsReservations)
-            {
-                var client = this.dbContext.Clients.Find(clientReservations.ClientId);
-
-                client.ClientsReservations.Remove(clientReservations);
-            }
-            reservation.ClientsReservations = new List<ClientReservations>();
-        }
-
         public IEnumerable<Reservation> GetAll()
         {
             return this.dbContext.Reservations
                 .Include(x => x.Room)
                 .Include(x => x.User)
                 .Include(x => x.ClientsReservations)
-                .ToList();
+                .OrderBy(x => x.StartDate)
+                .ThenBy(x => x.EndDate);
         }
 
         public Reservation GetById(string id)
@@ -150,6 +140,19 @@ namespace HotelReservationManager.Services
                 .ToList();
 
             return reservations.FirstOrDefault(x => x.Id == id);
+        }
+
+
+        private void RemoveClients(Reservation reservation)
+        {
+            foreach (var clientReservation in reservation.ClientsReservations)
+            {
+                var client = this.dbContext.Clients.Find(clientReservation.ClientId);
+
+                client.ClientsReservations.Remove(clientReservation);
+            }
+
+            reservation.ClientsReservations = new List<ClientReservations>();
         }
     }
 }

@@ -1,59 +1,193 @@
-﻿@model HotelReservationManager.ViewModels.ClientViewModels.ClientsListViewModel
+﻿<div class="container">
 
-    <div class="container">
+    <h1 class="mt-4 mb-3">Clients</h1>
 
-        <h1 class="mt-4 mb-3">Clients</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">My Hotel</a>
+        </li>
+        <li class="breadcrumb-item active">Clients</li>
+    </ol>
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a asp-controller="Home" asp-action="Index">My Hotel</a>
-            </li>
-            <li class="breadcrumb-item active">Clients</li>
-        </ol>
-
-        @foreach (var client in Model.Clients)
-        {
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h2 class="card-title">@client.FirstName @client.ThirdName</h2>
-                            <p>Email: @client.Email</p>
-                            <p>Telephone: @client.PhoneNumber</p>
-                            <p>Is Adult: @client.IsAdult</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <a class="btn btn-primary" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id">Edit</a>
-                    <a class="btn btn-primary" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id">Delete</a>
-                </div>
+    <div class="card mb-4">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+            <div class="input-group">
+                <input id="search" type="text" class="form-control" placeholder="Search by some Name">
             </div>
-        }
+        </div>
+    </div>
 
-
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
+    <div id="clients">
 
     </div>
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" onclick="prevPage()" id="btn_prev" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" id="page"></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" onclick="nextPage()" id="btn_next" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    var search = document.getElementById("search");
+    var clients = document.getElementById("clients");
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var page_number = document.getElementById("page");
+    const records_per_page = 5;
+    let current_page = 1;
+    let clientsHTML = [];
+
+    function searchClients() {
+        $.ajax({
+            url: "/Client/SearchClients",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            data: {
+                term: search.value
+            },
+            success: function (items) {
+                clientsHTML = [];
+
+                items.forEach(item => {
+                    createClientCard(item);
+                });
+
+                changePage(current_page);
+            },
+            error: function (response) {
+                debugger;
+                alert('eror');
+            }
+        });
+    }
+
+    function createClientCard(item) {
+        var card = document.createElement("div");
+        var cardBody = document.createElement("div");
+        var rowStart = document.createElement("div");
+        var sizeInCols = document.createElement("div");
+        var fullName = document.createElement("h2");
+        var email = document.createElement("p");
+        var phoneNumber = document.createElement("p");
+        var isAdult = document.createElement("p");
+        var footer = document.createElement("div");
+        var whiteSpace = document.createElement("span");
+        var editButton = document.createElement("a");
+        var deleteButton = document.createElement("a");
+
+        card.className = "card mb-4"
+        cardBody.className = "card-body";
+        rowStart.className = "row";
+        sizeInCols.className = "col-lg-6";
+        fullName.innerHTML = "Full Name: " + item.firstName + " " + item.thirdName;
+        email.innerHTML = "Email: " + item.email;
+        phoneNumber.innerHTML = "Phone Number: " + item.phoneNumber;
+        isAdult.innerHTML = "Is Adult: " + item.isAdult;
+        footer.className = "card-footer text-muted";
+        whiteSpace.innerHTML = "&nbsp;";
+        editButton.className = "btn btn-primary";
+        editButton.href = "/Client/Edit/" + item.id;
+        editButton.innerHTML = "Edit"
+        deleteButton.className = "btn btn-primary";
+        deleteButton.href = "/Client/Delete/" + item.id;
+        deleteButton.innerHTML = "Delete";
+
+        card.appendChild(cardBody);
+        cardBody.appendChild(rowStart);
+        rowStart.appendChild(sizeInCols);
+        sizeInCols.appendChild(fullName);
+        sizeInCols.appendChild(email);
+        sizeInCols.appendChild(phoneNumber);
+        sizeInCols.appendChild(isAdult);
+        card.appendChild(footer);
+        footer.appendChild(editButton);
+        footer.appendChild(whiteSpace);
+        footer.appendChild(deleteButton);
+
+        clientsHTML.push(card);
+    }
+
+    function removeClients() {
+        for (var i = clients.children.length - 1; i >= 0; i--) {
+            clients.removeChild(clients.children[i]);
+        }
+    }
+
+    function prevPage() {
+        if (current_page > 1) {
+            current_page--;
+            changePage(current_page);
+        }
+    }
+
+    function nextPage() {
+        if (current_page < numPages()) {
+            current_page++;
+            changePage(current_page);
+        }
+    }
+
+    function changePage(page) {
+        if (page < 1) {
+            page = 1
+        };
+
+        if (page > numPages()) {
+            page = numPages()
+        };
+
+        removeClients();
+
+        for (var i = (page - 1) * records_per_page; i < (page * records_per_page); i++) {
+            if (clientsHTML.length - 1 >= i && i >= 0) {
+                clients.appendChild(clientsHTML[i]);
+            }
+        }
+        page_number.innerHTML = page;
+
+        if (page == 1) {
+            btn_prev.style.visibility = "hidden";
+        } else {
+            btn_prev.style.visibility = "visible";
+        }
+
+        if (page == numPages()) {
+            btn_next.style.visibility = "hidden";
+        } else {
+            btn_next.style.visibility = "visible";
+        }
+    }
+
+    function numPages() {
+        return Math.ceil(clientsHTML.length / records_per_page);
+    }
+
+    window.onload = function () {
+        searchClients();
+        changePage(1);
+    };
+
+    search.addEventListener("input", function () {
+        removeClients();
+        searchClients();
+    });
+</script>

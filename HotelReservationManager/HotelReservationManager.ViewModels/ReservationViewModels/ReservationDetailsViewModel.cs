@@ -7,13 +7,6 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
 {
     public class ReservationDetailsViewModel
     {
-
-
-        public ReservationDetailsViewModel()
-        {
-
-        }
-
         public ReservationDetailsViewModel(string id, HotelUser hotelUser, DateTime startDate, DateTime endDate, 
             List<Client> adults, List<Client> childrens, Room room, bool breakfast, bool allInclusive, double price)
         {
@@ -27,6 +20,11 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
             Breakfast = breakfast;
             AllInclusive = allInclusive;
             Price = price;
+        }
+
+        public ReservationDetailsViewModel()
+        {
+
         }
 
         public string Id { get; set; }

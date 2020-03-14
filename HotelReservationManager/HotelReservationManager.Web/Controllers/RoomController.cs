@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
-using HotelReservationManager.ViewModels;
 using HotelReservationManager.ViewModels.RoomViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +26,6 @@ namespace HotelReservationManager.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomViewModel createRoomViewModel)
         {
-
             this.roomService.Create(
                 createRoomViewModel.Capacity,
                 createRoomViewModel.Type,
@@ -41,9 +38,7 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var list = new RoomsListViewModel();
-            TransferRoomsToViewModel(list.Rooms);
-            return this.View(list);
+            return this.View();
         }
 
         [HttpGet]
@@ -51,7 +46,7 @@ namespace HotelReservationManager.Web.Controllers
         {
             var room = this.roomService.GetById(id);
 
-            var editClientViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.IsFree, room.PriceOnBedAdult,
+            var editClientViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.PriceOnBedAdult,
                 room.PriceOnBedChildren, room.Number);
 
             return this.View(editClientViewModel);
@@ -73,16 +68,28 @@ namespace HotelReservationManager.Web.Controllers
             return this.RedirectToAction("List");
         }
 
-
-        private void TransferRoomsToViewModel(List<RoomViewModel> list)
+        [HttpGet]
+        public JsonResult SearchRooms(int term)
         {
-            foreach (var room in this.roomService.GetAll().OrderBy(x=>x.Number))
-            {
-                var roomViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.IsFree, room.PriceOnBedAdult,
-                room.PriceOnBedChildren, room.Number);
+            var rooms = new List<RoomViewModel>();
 
-                list.Add(roomViewModel);
+            foreach (var room in this.roomService.GetAll())
+            {
+                var roomViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.PriceOnBedAdult,
+                    room.PriceOnBedChildren, room.Number);
+
+                rooms.Add(roomViewModel);
             }
+
+            if (term != 0)
+            {
+                rooms = rooms
+                    .Where(x => x.Number == term
+                    || x.Capacity == term)
+                    .ToList();
+            }
+
+            return Json(rooms);
         }
     }
 }

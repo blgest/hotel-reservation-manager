@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
-using HotelReservationManager.ViewModels;
 using HotelReservationManager.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using HotelReservationManager.Data.Models;
 
 namespace HotelReservationManager.Web.Controllers
 {
@@ -14,27 +15,28 @@ namespace HotelReservationManager.Web.Controllers
     {
         private readonly IHotelUserService hotelUserService;
 
-        public HotelUserController(IHotelUserService hotelUserService)
+        private readonly UserManager<HotelUser> userManager;
+
+        public HotelUserController(IHotelUserService hotelUserService, UserManager<HotelUser> userManager)
         {
             this.hotelUserService = hotelUserService;
+            this.userManager = userManager;
         }
+
+        //Create -> Identity -> Register
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ActiveList()
         {
-            var activeList = new ActiveUsersListViewModel();
-            TransferActiveUsersToViewModel(activeList.Users);
-            return this.View(activeList);
+            return this.View();
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> BlockedList()
         {
-            var blockedList = new BlockedUsersListViewModel();
-            TransferBlockedUsersToViewModel(blockedList.Users);
-            return this.View(blockedList);
+            return this.View();
         }
 
 
@@ -102,31 +104,68 @@ namespace HotelReservationManager.Web.Controllers
             return this.RedirectToAction("ActiveList", "HotelUser");
         }
 
-
-        private void TransferBlockedUsersToViewModel(List<BlockedUserViewModel> list)
+        [HttpGet]
+        public JsonResult SearchActiveUsers(string term)
         {
-            foreach (var user in hotelUserService.GetAllBlocked().OrderBy(x=>x.FirstName).
-                ThenBy(y=>y.SecondName).ThenBy(z=>z.ThirdName))
-            {
-                var blockedUserViewModel = new BlockedUserViewModel(user.Id, user.UserName, user.FirstName,
-                    user.SecondName, user.ThirdName, user.UCN, user.PhoneNumber, user.Email,
-                    user.StartDate, user.EndDate);
+            var activeUsers = new List<ActiveUserViewModel>();
 
-                list.Add(blockedUserViewModel);
+            foreach (var activeUser in this.hotelUserService.GetAllActive())
+            {
+                var role = userManager.GetRolesAsync(activeUser).Result;
+
+                var activeUserViewModel = new ActiveUserViewModel(activeUser.Id, activeUser.UserName, activeUser.FirstName,
+                    activeUser.SecondName, activeUser.ThirdName, activeUser.UCN, activeUser.PhoneNumber, activeUser.Email,
+                    activeUser.StartDate, role[0]);
+
+                activeUsers.Add(activeUserViewModel);
             }
+
+            activeUsers.OrderBy(x => x.Role == "Admin");
+
+            if (term != null)
+            {
+                term = term.ToLower();
+
+                activeUsers = activeUsers
+                    .Where(x => x.Username.ToLower().Contains(term)
+                    || x.FirstName.ToLower().Contains(term)
+                    || x.SecondName.ToLower().Contains(term)
+                    || x.ThirdName.ToLower().Contains(term))
+                    .ToList();
+            }
+
+            return Json(activeUsers);
         }
 
-        private void TransferActiveUsersToViewModel(List<ActiveUserViewModel> list)
+        [HttpGet]
+        public JsonResult SearchBlockedUsers(string term)
         {
-            foreach (var user in hotelUserService.GetAllActive().OrderBy(x => x.FirstName).
-                ThenBy(y => y.SecondName).ThenBy(z => z.ThirdName))
-            {
-                var activeUserViewModel = new ActiveUserViewModel(user.Id, user.UserName, user.FirstName,
-                    user.SecondName, user.ThirdName, user.UCN, user.PhoneNumber, user.Email,
-                    user.StartDate);
+            var blockedUsers = new List<BlockedUserViewModel>();
 
-                list.Add(activeUserViewModel);
+            foreach (var blockedUser in this.hotelUserService.GetAllBlocked())
+            {
+                var role = userManager.GetRolesAsync(blockedUser).Result;
+
+                var blockedserViewModel = new BlockedUserViewModel(blockedUser.Id, blockedUser.UserName, blockedUser.FirstName,
+                    blockedUser.SecondName, blockedUser.ThirdName, blockedUser.UCN, blockedUser.PhoneNumber, blockedUser.Email,
+                    blockedUser.StartDate, blockedUser.EndDate, role[0]);
+
+                blockedUsers.Add(blockedserViewModel);
             }
+
+            if (term != null)
+            {
+                term = term.ToLower();
+
+                blockedUsers = blockedUsers
+                    .Where(x => x.Username.ToLower().Contains(term)
+                    || x.FirstName.ToLower().Contains(term)
+                    || x.SecondName.ToLower().Contains(term)
+                    || x.ThirdName.ToLower().Contains(term))
+                    .ToList();
+            }
+
+            return Json(blockedUsers);
         }
     }
 }

@@ -17,7 +17,5 @@ namespace HotelReservationManager.Services.Contracts
         IEnumerable<Client> GetAll();
 
         Client GetById(string id);
-
-        Client GetByEmail(string email);
     }
 }

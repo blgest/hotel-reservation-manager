@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using HotelReservationManager.Data;
+﻿using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace HotelReservationManager.Web.Controllers
 {

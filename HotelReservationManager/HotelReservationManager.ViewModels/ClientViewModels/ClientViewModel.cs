@@ -25,21 +25,21 @@ namespace HotelReservationManager.ViewModels.ClientViewModels
 
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some First Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Third Name")]
         public string ThirdName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered true or false")]
         public bool IsAdult { get; set; }
     }
 }

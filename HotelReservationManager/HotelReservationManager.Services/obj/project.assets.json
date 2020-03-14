@@ -5114,11 +5114,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj",
+      "projectUniqueName": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj",
       "projectName": "HotelReservationManager.Services",
-      "projectPath": "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj",
+      "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj",
       "packagesPath": "C:\\Users\\Blagovest\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Services\\obj\\",
+      "outputPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Blagovest\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5134,11 +5134,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
             },
-            "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj"
             }
           }
         }

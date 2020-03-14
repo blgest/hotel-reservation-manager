@@ -55,12 +55,16 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        public List<Room> GetAll()
+        public IEnumerable<Room> GetAll()
         {
-            return this.dbContext.Rooms.ToList();
+            return this.dbContext.Rooms
+                .OrderBy(x => x.Number)
+                .ThenBy(x => x.Type)
+                .ThenBy(x => x.Capacity)
+                .ToList();
         }
 
-        public List<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type)
+        public IEnumerable<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type)
         {
             var rooms = new List<Room>();
 
@@ -93,16 +97,15 @@ namespace HotelReservationManager.Services
             return rooms;
         }
 
-        private static bool CheckForNextDate(DateTime k, DateTime x, DateTime y)
+        private bool CheckForNextDate(DateTime k, DateTime x, DateTime y)
         {
             return k > x && k >= y;
         }
 
-        private static bool CheckForPreviosDate(DateTime x, DateTime k, DateTime z)
+        private bool CheckForPreviosDate(DateTime x, DateTime k, DateTime z)
         {
             return k < x && z <= x;
         }
-
 
         public Room GetById(string id)
         {

@@ -6,16 +6,21 @@ namespace HotelReservationManager.ViewModels.RoomViewModels
 {
     public class RoomViewModel
     {
-        public RoomViewModel(string id, int capacity, RoomType type, bool isFree,
-            double priceOnBedForAdult, double priceOnBedForChildren, int number)
+        public RoomViewModel(string id, int capacity, RoomType type, double priceOnBedForAdult, 
+            double priceOnBedForChildren, int number)
         {
             Id = id;
             Capacity = capacity;
             Type = type;
-            IsFree = isFree;
             PriceOnBedForAdult = priceOnBedForAdult;
             PriceOnBedForChildren = priceOnBedForChildren;
             Number = number;
+        }
+
+        public RoomViewModel(string id, int capacity, RoomType type, double priceOnBedForAdult, double priceOnBedForChildren, 
+            int number, bool isFree) : this(id, capacity, type, priceOnBedForAdult, priceOnBedForChildren, number)
+        {
+            IsFree = isFree;
         }
 
         public RoomViewModel()
@@ -26,21 +31,24 @@ namespace HotelReservationManager.ViewModels.RoomViewModels
         public string Id { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Only positive Capacity graeter then 1 allowed")]
         public int Capacity { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Must be selected some Type")]
         public RoomType Type { get; set; }
 
         [Required]
-        public bool IsFree { get; set; }
-
-        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Only positive Price On Bed For Adult allowed")]
         public double PriceOnBedForAdult { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Only positive Price On Bed For Children allowed")]
         public double PriceOnBedForChildren { get; set; }
 
         [Required]
+        [Range(101, int.MaxValue, ErrorMessage = "Only positive Number gereater then 101 allowed")]
         public int Number { get; set; }
+
+        public bool IsFree { get; set; }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HotelReservationManager.Data;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.ClientViewModels;
-using HotelReservationManager.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationManager.Web.Controllers
@@ -43,9 +40,7 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var list = new ClientsListViewModel();
-            TransferClientsToViewModel(list.Clients);
-            return this.View(list);
+            return this.View();
         }
 
         [HttpGet]
@@ -77,17 +72,30 @@ namespace HotelReservationManager.Web.Controllers
             return this.RedirectToAction("List");
         }
 
-
-        private void TransferClientsToViewModel(List<ClientViewModel> list)
+        [HttpGet]
+        public JsonResult SearchClients(string term)
         {
-            foreach (var client in this.clientService.GetAll().OrderBy(x=>x.FirstName).ThenBy(y=>y.ThirdName))
+            var clients = new List<ClientViewModel>();
+
+            foreach (var client in this.clientService.GetAll())
             {
-                var clientsViewModel = new ClientViewModel(client.Id, client.FirstName,
-                    client.ThirdName, client.Telephone, client.Email,
+                var clientViewModel = new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email,
                     client.IsAdult);
 
-                list.Add(clientsViewModel);
+                clients.Add(clientViewModel);
             }
+
+            if (term != null)
+            {
+                term = term.ToLower();
+
+                clients = clients
+                    .Where(x => x.FirstName.ToLower().Contains(term)
+                    || x.ThirdName.ToLower().Contains(term))
+                    .ToList();
+            }
+
+            return Json(clients);
         }
     }
 }

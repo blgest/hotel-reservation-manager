@@ -13,9 +13,9 @@ namespace HotelReservationManager.Services.Contracts
 
         void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number);
 
-        List<Room> GetAll();
+        IEnumerable<Room> GetAll();
 
-        List<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type);
+        IEnumerable<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type);
 
         Room GetById(string id);
     }

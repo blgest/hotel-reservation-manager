@@ -1,13 +1,9 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace HotelReservationManager.Services
 {
@@ -80,6 +76,10 @@ namespace HotelReservationManager.Services
             var actives = this.dbContext
                 .Users
                 .Where(x => x.IsActive == true)
+                .OrderBy(x => x.UserName)
+                .ThenBy(x => x.FirstName)
+                .ThenBy(x => x.SecondName)
+                .ThenBy(x => x.ThirdName)
                 .ToList();
 
             return actives;
@@ -90,6 +90,10 @@ namespace HotelReservationManager.Services
             var blocked = this.dbContext
                  .Users
                  .Where(x => x.IsActive == false)
+                 .OrderBy(x => x.UserName)
+                 .ThenBy(x => x.FirstName)
+                 .ThenBy(x => x.SecondName)
+                 .ThenBy(x => x.ThirdName)
                  .ToList();
 
             return blocked;

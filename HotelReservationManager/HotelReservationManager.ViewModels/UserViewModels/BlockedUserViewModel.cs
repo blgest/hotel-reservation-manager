@@ -7,18 +7,25 @@ namespace HotelReservationManager.ViewModels.UserViewModels
     public class BlockedUserViewModel
     {
         public BlockedUserViewModel(string id, string username, string firstName, string secondName, string thirdName, 
-            string uCN, string phoneNumber, string email, DateTime startDate, DateTime endDate)
+            string ucn, string phoneNumber, string email, DateTime startDate, DateTime endDate)
         {
             Id = id;
             Username = username;
             FirstName = firstName;
             SecondName = secondName;
             ThirdName = thirdName;
-            UCN = uCN;
+            UCN = ucn;
             PhoneNumber = phoneNumber;
             Email = email;
             StartDate = startDate;
             EndDate = endDate;
+        }
+
+        public BlockedUserViewModel(string id, string username, string firstName, string secondName, string thirdName, string ucn, 
+            string phoneNumber, string email, DateTime startDate, DateTime endDate, string role) : this(id, username, firstName, secondName, 
+                thirdName, ucn, phoneNumber, email, startDate, endDate)
+        {
+            Role = role;
         }
 
         public BlockedUserViewModel()
@@ -45,5 +52,7 @@ namespace HotelReservationManager.ViewModels.UserViewModels
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public string Role { get; set; }
     }
 }

@@ -1,24 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace HotelReservationManager.ViewModels.UserViewModels
 {
     public class ActiveUserViewModel
     {
         public ActiveUserViewModel(string id, string username, string firstName, string secondName, string thirdName, 
-            string uCN, string phoneNumber, string email, DateTime startDate)
+            string ucn, string phoneNumber, string email, DateTime startDate)
         {
             Id = id;
             Username = username;
             FirstName = firstName;
             SecondName = secondName;
             ThirdName = thirdName;
-            UCN = uCN;
+            UCN = ucn;
             PhoneNumber = phoneNumber;
             Email = email;
             StartDate = startDate;
+        }
+
+        public ActiveUserViewModel(string id, string username, string firstName, string secondName, string thirdName, string ucn, 
+            string phoneNumber, string email, DateTime startDate, string role) : this(id, username, firstName, secondName, thirdName, ucn, 
+                phoneNumber, email, startDate)
+        {
+            Role = role;
         }
 
         public ActiveUserViewModel()
@@ -28,16 +33,16 @@ namespace HotelReservationManager.ViewModels.UserViewModels
 
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Username")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some First Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Second Name")]
         public string SecondName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Third Name")]
         public string ThirdName { get; set; }
 
         [StringLength(10, ErrorMessage = "The {0} must be {1} characters long.", MinimumLength = 10)]
@@ -47,11 +52,13 @@ namespace HotelReservationManager.ViewModels.UserViewModels
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Must be entered some Date")]
         public DateTime StartDate { get; set; }
+
+        public string Role { get; set; }
     }
 }

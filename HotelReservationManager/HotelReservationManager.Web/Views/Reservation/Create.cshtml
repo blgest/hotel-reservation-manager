@@ -82,12 +82,8 @@
         <div class="form-group">
             <label asp-for="Rooms">Rooms:</label>
             <div class="form-group">
-                <select id="rooms" name="Rooms">
+                <select id="rooms" name="rooms">
                     <option value="">Please select one</option>
-                    @foreach (var room in Model.Rooms)
-                    {
-                        <option value="@room.Id">@room.Number @room.Type @room.Capacity</option>
-                    }
                 </select>
                 <span asp-validation-for="Rooms" class="text-danger"></span>
             </div>
@@ -95,7 +91,7 @@
 
         <div class="form-group">
             <label asp-for="Price">Price:</label>
-            <input asp-for="Price" value="Price" id="price" class="form-control" readonly="readonly">
+            <input asp-for="Price" value="0.0" id="price" class="form-control" readonly="readonly">
         </div>
 
         <hr>
@@ -118,6 +114,8 @@
     var childrens = document.getElementById("childrens");
     var price = document.getElementById("price");
     var rooms = document.getElementById("rooms");
+    var roomTypes = document.getElementsByName("roomType");
+    var type = ""
     var room = "";
 
     function calculatePrice() {
@@ -143,19 +141,63 @@
         });
     }
 
+    function filtrateRooms() {
+        $.ajax({
+            url: "/Reservation/FiltrateRooms",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            data: {
+                startDate: startDt.value,
+                endDate: endDt.value,
+                adultsCount: adults.value,
+                childrensCount: childrens.value,
+                roomType: type.value
+            },
+            success: function (items) {
+                items.forEach(item => {
+                    var option = document.createElement("option");
+                    option.text = item.number;
+                    option.value = item.id;
+                    rooms.appendChild(option);
+                });
+            },
+            error: function (response) {
+                debugger;
+                alert('eror');
+            }
+        });
+    }
+
+    function removeUnappropriateRooms() {
+        for (var i = 1; i < rooms.length; i++) {
+            rooms.remove(i);
+        }
+    }
+
+    filtrateRooms();
+
     adults.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
         calculatePrice();
     });
 
     childrens.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
         calculatePrice();
     });
 
     startDt.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
         calculatePrice();
     });
 
     endDt.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
         calculatePrice();
     });
 
@@ -163,6 +205,14 @@
         console.log("room");
         room = e.target.value;
         calculatePrice();
+    });
+
+    roomTypes.forEach(roomType => {
+        roomType.onclick = function () {
+            type = roomType;
+            removeUnappropriateRooms();
+            filtrateRooms();
+        }
     });
 </script>
 

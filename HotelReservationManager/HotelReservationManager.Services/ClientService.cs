@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HotelReservationManager.Services
 {
@@ -17,7 +16,6 @@ namespace HotelReservationManager.Services
         {
             this.dbContext = dbContext;
         }
-
 
         public void Create(string firstName, string thirdName, string phoneNumber, string email, int years)
         {
@@ -37,9 +35,15 @@ namespace HotelReservationManager.Services
         {
             var client = GetById(clientId);
 
-            this.dbContext.Clients.Remove(client);
+            foreach (var clientReservation in client.ClientsReservations)
+            {
+                var reservation = this.dbContext.Reservations.Find(clientReservation.ReservationId);
+                reservation.ClientsReservations.Remove(clientReservation);
+            }
 
-            //Remove reservation
+            client.ClientsReservations = new List<ClientReservations>();
+
+            this.dbContext.Clients.Remove(client);
 
             this.dbContext.SaveChanges();
         }
@@ -60,7 +64,9 @@ namespace HotelReservationManager.Services
 
         public IEnumerable<Client> GetAll()
         {
-            return this.dbContext.Clients;
+            return this.dbContext.Clients
+                .OrderBy(x=>x.FirstName)
+                .ThenBy(x=>x.ThirdName);
         }
 
         public Client GetById(string id)
@@ -69,11 +75,6 @@ namespace HotelReservationManager.Services
                 .Include(x => x.ClientsReservations).ToList();
 
             return clients.FirstOrDefault(x => x.Id == id);
-        }
-
-        public Client GetByEmail(string email)
-        {
-            return this.dbContext.Clients.FirstOrDefault(c => c.Email == email);
         }
     }
 }
