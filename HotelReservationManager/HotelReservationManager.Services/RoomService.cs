@@ -1,6 +1,7 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,21 @@ namespace HotelReservationManager.Services
         public void Delete(string roomId)
         {
             var room = GetById(roomId);
+
+            foreach (var reservation in this.dbContext.Reservations.Include(x=>x.Room).Include(x=>x.ClientsReservations))
+            {
+                if (reservation.Room == room)
+                {
+                    foreach (var clientReservation in reservation.ClientsReservations)
+                    {
+                        var client = this.dbContext.Clients.Find(clientReservation.ClientId);
+
+                        client.ClientsReservations = new List<ClientReservations>();
+                    }
+
+                    this.dbContext.Reservations.Remove(reservation);
+                }
+            }
 
             this.dbContext.Rooms.Remove(room);
             this.dbContext.SaveChanges();
