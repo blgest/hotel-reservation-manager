@@ -8,3 +8,15 @@ C:\Users\Blagovest\Desktop\GitHub\hotel-reservation-manager\HotelReservationMana
 C:\Users\Blagovest\Desktop\GitHub\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.AssemblyInfo.cs
 C:\Users\Blagovest\Desktop\GitHub\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
 C:\Users\Blagovest\Desktop\GitHub\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.deps.json
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.runtimeconfig.json
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.runtimeconfig.dev.json
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.AssemblyInfoInputs.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.AssemblyInfo.cs
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.csproj.CoreCompileInputs.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.genruntimeconfig.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.csproj.AssemblyReference.cache

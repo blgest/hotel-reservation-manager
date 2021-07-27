@@ -9874,19 +9874,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Blagovest\\.nuget\\packages\\": {}
+    "C:\\Users\\Blagovest\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\HotelReservationManager.Web.csproj",
+      "projectUniqueName": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\HotelReservationManager.Web.csproj",
       "projectName": "HotelReservationManager.Web",
-      "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\HotelReservationManager.Web.csproj",
+      "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\HotelReservationManager.Web.csproj",
       "packagesPath": "C:\\Users\\Blagovest\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\obj\\",
+      "outputPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Web\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Blagovest\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9894,22 +9899,24 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Users\\Public\\Documents\\Infragistics\\NuGet\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
             },
-            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj"
             },
-            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj"
             },
-            "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj": {
-              "projectPath": "C:\\Users\\Blagovest\\Desktop\\GitHub\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj"
+            "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj": {
+              "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj"
             }
           }
         }
@@ -9922,6 +9929,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.AspNetCore.Identity.UI": {
             "target": "Package",
@@ -9962,7 +9970,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
