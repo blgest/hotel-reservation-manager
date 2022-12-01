@@ -81,11 +81,9 @@ namespace HotelReservationManager.Web.Controllers
                 rooms.Add(roomViewModel);
             }
 
-            if (term != 0)
+            if (term > 0)
             {
-                rooms = rooms
-                    .Where(x => x.Number == term
-                    || x.Capacity == term)
+                rooms = rooms.Where(x => x.Number == term || x.Capacity >= term)
                     .ToList();
             }
 
