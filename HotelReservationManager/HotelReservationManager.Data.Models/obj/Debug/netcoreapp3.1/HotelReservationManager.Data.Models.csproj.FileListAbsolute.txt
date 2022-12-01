@@ -20,3 +20,4 @@ C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\Hot
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.pdb
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.genruntimeconfig.cache
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.csproj.AssemblyReference.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\netcoreapp3.1\HotelReservationManager.Data.Models.GeneratedMSBuildEditorConfig.editorconfig

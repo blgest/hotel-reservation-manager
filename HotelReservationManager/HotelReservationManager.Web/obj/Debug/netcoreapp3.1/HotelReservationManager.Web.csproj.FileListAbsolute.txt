@@ -330,7 +330,6 @@ C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\Hot
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.RazorAssemblyInfo.cs
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\HotelReservationManager.Web.StaticWebAssets.Manifest.cache
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\HotelReservationManager.Web.StaticWebAssets.xml
-C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\scopedcss\bundle\HotelReservationManager.Web.styles.css
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.TagHelpers.input.cache
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.TagHelpers.output.cache
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.RazorCoreGenerate.cache
@@ -368,3 +367,9 @@ C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\Hot
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.pdb
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.genruntimeconfig.cache
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.csproj.AssemblyReference.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\HotelReservationManager.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\HotelReservationManager.Web.StaticWebAssets.Pack.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.HotelReservationManager.Web.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.build.HotelReservationManager.Web.props
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildMultiTargeting.HotelReservationManager.Web.props
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildTransitive.HotelReservationManager.Web.props

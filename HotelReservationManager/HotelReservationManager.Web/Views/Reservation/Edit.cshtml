@@ -60,25 +60,29 @@
             </div>
         </div>
 
-        <hr />
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black" />
 
         <div class="form-group">
-            <label asp-for="Breakfast">Breakfast</label>
-            <input asp-for="Breakfast" type="text" class="form-control" value="@Model.Breakfast">
-            <span asp-validation-for="Breakfast" class="text-danger"></span>
+            <div class="form-switch">
+                <input asp-for="Breakfast" class="form-check-input" type="checkbox" role="switch" value="@Model.Breakfast">
+                <label asp-for="Breakfast">Breakfast</label>
+                <span asp-validation-for="Breakfast" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="AllInclusive">All Inclusive</label>
-            <input asp-for="AllInclusive" type="text" class="form-control" value="@Model.AllInclusive">
-            <span asp-validation-for="AllInclusive" class="text-danger"></span>
+            <div class="form-switch">
+                <input asp-for="AllInclusive" class="form-check-input" type="checkbox" role="switch" value="@Model.AllInclusive">
+                <label asp-for="AllInclusive">All Inclusive</label>
+                <span asp-validation-for="Breakfast" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">
             <label asp-for="Rooms">Rooms:</label>
             <div class="form-group">
                 <select id="rooms" name="Rooms">
-                    <option id="selected" value="@Model.Room.Id">@Model.Room.Number</option>
+                    <option id="selected" value="@Model.Room.Id">@Model.Room.Number  @Model.Room.Type</option>
                     @foreach (var room in Model.Rooms)
                     {
                         if (room.Id != Model.Room.Id)
@@ -93,15 +97,17 @@
 
         <div class="form-group">
             <label asp-for="Price">Price:</label>
-            <input asp-for="Price" value="Price" id="price" class="form-control" readonly="readonly">
+            <input asp-for="Price" value="@Model.Price" id="price" class="form-control" readonly="readonly">
         </div>
 
-        <hr />
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black" />
+
         <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
             <button type="submit" class="btn btn-primary">Back</button>
             <button type="submit" class="btn btn-primary">Edit</button>
         </div>
-        <hr />
+
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black" />
     </form>
 </div>
 
@@ -139,6 +145,7 @@
             }
         });
     }
+
 
     adults.addEventListener('change', function () {
         calculatePrice()

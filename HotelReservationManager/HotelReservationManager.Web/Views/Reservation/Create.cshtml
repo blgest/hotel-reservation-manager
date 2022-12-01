@@ -19,13 +19,13 @@
 
         <div class="form-group">
             <label asp-for="AdultsCount">Adults Count</label>
-            <input id="adults" asp-for="AdultsCount" class="form-control">
+            <input id="adults" asp-for="AdultsCount" class="form-control" min="0">
             <span asp-validation-for="AdultsCount" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ChildrensCount">Childrens Count</label>
-            <input id="childrens" asp-for="ChildrensCount" class="form-control">
+            <input id="childrens" asp-for="ChildrensCount" class="form-control" min="0">
             <span asp-validation-for="ChildrensCount" class="text-danger"></span>
         </div>
 
@@ -65,18 +65,22 @@
             </div>
         </div>
 
-        <hr />
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black" />
 
         <div class="form-group">
-            <label asp-for="Breakfast">Breakfast</label>
-            <input asp-for="Breakfast" type="text" class="form-control">
-            <span asp-validation-for="Breakfast" class="text-danger"></span>
+            <div class="form-switch">
+                <input asp-for="Breakfast" class="form-check-input" type="checkbox" role="switch">
+                <label asp-for="Breakfast">Breakfast</label>
+                <span asp-validation-for="Breakfast" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="AllInclusive">All Inclusive</label>
-            <input asp-for="AllInclusive" type="text" class="form-control">
-            <span asp-validation-for="AllInclusive" class="text-danger"></span>
+            <div class="form-switch">
+                <input asp-for="AllInclusive" class="form-check-input" type="checkbox" role="switch">
+                <label asp-for="AllInclusive">All Inclusive</label>
+                <span asp-validation-for="Breakfast" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="form-group">
@@ -94,13 +98,13 @@
             <input asp-for="Price" value="0.0" id="price" class="form-control" readonly="readonly">
         </div>
 
-        <hr>
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black"/>
         <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
             @{var user = await UserManager.GetUserAsync(User);}
             <a class="btn btn-primary" asp-controller="Reservation" asp-action="List">Back</a>
             <button type="submit" class="btn btn-primary" asp-route-id="@user.Id">Create</button>
         </div>
-        <hr>
+        <hr style="height:2px; width:100%; border-width:0; color:black; background-color:black" />
     </form>
 </div>
 
@@ -117,6 +121,13 @@
     var roomTypes = document.getElementsByName("roomType");
     var type = ""
     var room = "";
+
+    const today = new Date()
+    startDt.valueAsDate = today;
+
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    endDt.valueAsDate = tomorrow;
 
     function calculatePrice() {
         $.ajax({

@@ -25,3 +25,4 @@ C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\Hot
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Services\obj\Debug\netcoreapp3.1\HotelReservationManager.Services.dll
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Services\obj\Debug\netcoreapp3.1\HotelReservationManager.Services.pdb
 C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Services\obj\Debug\netcoreapp3.1\HotelReservationManager.Services.csproj.AssemblyReference.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Services\obj\Debug\netcoreapp3.1\HotelReservationManager.Services.GeneratedMSBuildEditorConfig.editorconfig

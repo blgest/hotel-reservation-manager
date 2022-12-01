@@ -36,12 +36,10 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
         [Required(ErrorMessage = "Must be entered some End Date")]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Only positive Adults Count allowed")]
+        [Required()]
         public int AdultsCount { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Only positive Childrens Count allowed")]
+        [Required()]
         public int ChildrensCount { get; set; }
 
         [Required(ErrorMessage = "Must be selected some Type")]
@@ -52,13 +50,13 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
 
         public Room Room { get; set; }
 
-        [Range(typeof(bool), "false", "true", ErrorMessage = "Breakfast must be true or false")]
         public bool Breakfast { get; set; }
 
-        [Range(typeof(bool), "false", "true", ErrorMessage = "All Inclusive must be true or false")]
         public bool AllInclusive { get; set; }
 
+
         [Required]
+        [Range(10, 50000, ErrorMessage = "The reservation should be in range from 10 to 50,000")]
         public double Price { get; set; }
     }
 }
