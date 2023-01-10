@@ -1,0 +1,121 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = HotelReservationManager.Web
+build_property.RootNamespace = HotelReservationManager.Web
+build_property.ProjectDir = C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/Account/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Client/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Client/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Client/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XExpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Home/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIb21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/HotelUser/ActiveList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG90ZWxVc2VyXEFjdGl2ZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/HotelUser/BlockedList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG90ZWxVc2VyXEJsb2NrZWRMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/HotelUser/EditActiveUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG90ZWxVc2VyXEVkaXRBY3RpdmVVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/HotelUser/EditBlockedUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG90ZWxVc2VyXEVkaXRCbG9ja2VkVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Reservation/AddClients.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cQWRkQ2xpZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Reservation/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Reservation/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Reservation/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Reservation/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Room/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9vbVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Room/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9vbVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Room/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9vbVxMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Blagovest/Desktop/hotel-reservation-manager/HotelReservationManager/HotelReservationManager.Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,14 @@
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.csproj.AssemblyReference.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.AssemblyInfoInputs.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.AssemblyInfo.cs
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.csproj.CoreCompileInputs.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\net6.0\HotelReservationManager.Data.Models.deps.json
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\net6.0\HotelReservationManager.Data.Models.runtimeconfig.json
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\net6.0\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\bin\Debug\net6.0\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\refint\HotelReservationManager.Data.Models.dll
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.pdb
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\HotelReservationManager.Data.Models.genruntimeconfig.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data.Models\obj\Debug\net6.0\ref\HotelReservationManager.Data.Models.dll
