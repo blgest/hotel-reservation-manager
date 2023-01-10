@@ -1,0 +1,5 @@
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data\obj\Debug\net6.0\HotelReservationManager.Data.csproj.AssemblyReference.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data\obj\Debug\net6.0\HotelReservationManager.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data\obj\Debug\net6.0\HotelReservationManager.Data.AssemblyInfoInputs.cache
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data\obj\Debug\net6.0\HotelReservationManager.Data.AssemblyInfo.cs
+C:\Users\Blagovest\Desktop\hotel-reservation-manager\HotelReservationManager\HotelReservationManager.Data\obj\Debug\net6.0\HotelReservationManager.Data.csproj.CoreCompileInputs.cache
