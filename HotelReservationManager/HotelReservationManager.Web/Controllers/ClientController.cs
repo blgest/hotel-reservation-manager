@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.ClientViewModels;
+using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservationManager.Web.Controllers
 {
@@ -36,9 +38,33 @@ namespace HotelReservationManager.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View(this.clients);
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundClients = this.clients;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+
+                foundClients = this.clients.AsQueryable()
+                    .Where(x => x.FirstName.ToLower().Contains(searchString)
+                    || x.ThirdName.ToLower().Contains(searchString)).ToList();
+            }
+
+            int pageSize = 5;
+            return View(PaginatedList<ClientViewModel>.Create(foundClients, pageNumber ?? 1, pageSize));
+
         }
 
         [HttpGet]
@@ -67,29 +93,6 @@ namespace HotelReservationManager.Web.Controllers
             this.clientService.Delete(id);
 
             return this.RedirectToAction("List");
-        }
-
-        [HttpGet]
-        public JsonResult SearchClients(string term)
-        {
-            var foundClients = new List<ClientViewModel>();
-
-
-            if (term != null)
-            {
-                term = term.ToLower();
-
-                foundClients = this.clients
-                    .Where(x => x.FirstName.ToLower().Contains(term)
-                    || x.ThirdName.ToLower().Contains(term))
-                    .ToList();
-            }
-            else
-            {
-                foundClients = this.clients;
-            }
-
-            return Json(foundClients);
         }
     }
 }
