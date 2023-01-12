@@ -17,15 +17,14 @@ namespace HotelReservationManager.Data.Models
         public string Id { get; set; }
 
         public string FirstName { get; set; }
-
+ 
         public string ThirdName { get; set; }
-
         public string Telephone { get; set; }
 
         public string Email { get; set; }
 
         public bool IsAdult { get; set; }
 
-        public ICollection<ClientReservations> ClientsReservations { get; set; }
+        public virtual ICollection<ClientReservations> ClientsReservations { get; set; }
     }
 }

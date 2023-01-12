@@ -7,9 +7,9 @@ namespace HotelReservationManager.Data.Models
     public class ClientReservations
     {
         public string ClientId { get; set; }
-        public Client Client { get; set; }
+        public virtual Client Client { get; set; }
 
         public string ReservationId { get; set; }
-        public Reservation Reservation { get; set; }
+        public virtual Reservation Reservation { get; set; }
     }
 }
