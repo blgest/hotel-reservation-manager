@@ -1,4 +1,6 @@
-﻿<div class="container">
+﻿@model List<HotelReservationManager.ViewModels.ClientViewModels.ClientViewModel>
+
+<div class="container">
 
     <h1 class="mt-4 mb-3">Clients</h1>
 
@@ -19,7 +21,25 @@
     </div>
 
     <div id="clients">
-
+      @foreach (var client in Model)
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h2 class="card-title">@client.FirstName @client.ThirdName</h2>
+                            <p>Email: @client.Email</p>
+                            <p>Telephone: @client.PhoneNumber</p>
+                            <p>Is Adult: @client.IsAdult</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <a class="btn btn-primary" asp-controller="Client" asp-action="Edit" asp-route-id="@client.Id">Edit</a>
+                    <a class="btn btn-primary" asp-controller="Client" asp-action="Delete" asp-route-id="@client.Id">Delete</a>
+                </div>
+            </div>
+        } 
     </div>
 
     <ul class="pagination justify-content-center">
@@ -153,7 +173,7 @@
 
         if (page > numPages()) {
             page = numPages()
-        };
+        }
 
         removeClients();
 

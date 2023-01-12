@@ -1,6 +1,8 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using HotelReservationManager.ViewModels;
+using HotelReservationManager.ViewModels.ClientViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,15 +19,15 @@ namespace HotelReservationManager.Services
             this.dbContext = dbContext;
         }
 
-        public void Create(string firstName, string thirdName, string phoneNumber, string email, int years)
+        public void Create(CreateClientViewModel createClientViewModel)
         {
             var newClient = new Client(
                 Guid.NewGuid().ToString(),
-                firstName,
-                thirdName,
-                phoneNumber,
-                email,
-                years > 18 ? true : false);
+                createClientViewModel.FirstName,
+                createClientViewModel.ThirdName,
+                createClientViewModel.PhoneNumber,
+                createClientViewModel.Email,
+                createClientViewModel.Years > 18 ? true : false);
 
             this.dbContext.Clients.Add(newClient);
             this.dbContext.SaveChanges();
@@ -41,40 +43,42 @@ namespace HotelReservationManager.Services
                 reservation.ClientsReservations.Remove(clientReservation);
             }
 
-            client.ClientsReservations = new List<ClientReservations>();
+            client.ClientsReservations.Clear();
 
             this.dbContext.Clients.Remove(client);
-
             this.dbContext.SaveChanges();
         }
 
-        public void Edit(string id, string firstName, string thirdName, string phoneNumber,
-            string email, bool isAdult)
+        public void Edit(ClientViewModel clientViewModel)
         {
-            var client = GetById(id);
+            var client = GetById(clientViewModel.Id);
 
-            client.FirstName = firstName;
-            client.ThirdName = thirdName;
-            client.Telephone = phoneNumber;
-            client.Email = email;
-            client.IsAdult = isAdult;
+            client.FirstName = clientViewModel.FirstName;
+            client.ThirdName = clientViewModel.ThirdName;
+            client.Telephone = clientViewModel.PhoneNumber;
+            client.Email = client.Email;
+            client.IsAdult = clientViewModel.IsAdult;
 
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<Client> GetAll()
+        public List<ClientViewModel> GetAll()
         {
             return this.dbContext.Clients
-                .OrderBy(x=>x.FirstName)
-                .ThenBy(x=>x.ThirdName);
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.ThirdName)
+                .Select(x => ToClientViewModel(x))
+                .ToList();
         }
 
         public Client GetById(string id)
         {
-            var clients = this.dbContext.Clients
-                .Include(x => x.ClientsReservations).ToList();
+            return this.dbContext.Clients.FirstOrDefault(x => x.Id == id);
+        }
 
-            return clients.FirstOrDefault(x => x.Id == id);
+        private static ClientViewModel ToClientViewModel(Client client)
+        {
+            return new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email, client.IsAdult);
         }
     }
 }

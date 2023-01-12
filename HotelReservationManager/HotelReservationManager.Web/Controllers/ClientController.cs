@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.ClientViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace HotelReservationManager.Web.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService clientService;
+        private readonly List<ClientViewModel> clients;
 
         public ClientController(IClientService clientService)
         {
             this.clientService = clientService;
+            this.clients = this.clientService.GetAll();
         }
 
         [HttpGet]
@@ -27,12 +30,7 @@ namespace HotelReservationManager.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel)
         {
-            this.clientService.Create(
-                createClientViewModel.FirstName,
-                createClientViewModel.ThirdName,
-                createClientViewModel.PhoneNumber,
-                createClientViewModel.Email,
-                createClientViewModel.Years);
+            this.clientService.Create(createClientViewModel);
 
             return this.RedirectToAction("List");
         }
@@ -40,27 +38,26 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            return this.View();
+            return this.View(this.clients);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var client = this.clientService.GetById(id);
+            var client = clients.FirstOrDefault(x => x.Id == id);
 
-            var editClientViewModel = new ClientViewModel(client.Id, client.FirstName,
-                client.ThirdName, client.Telephone, client.Email,
-                client.IsAdult);
+            if (client != null)
+            {
+                return this.View(client);
+            }
 
-            return this.View(editClientViewModel);
+            return this.RedirectToAction("List");
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ClientViewModel clientViewModel)
         {
-            this.clientService.Edit(clientViewModel.Id, clientViewModel.FirstName,
-                clientViewModel.ThirdName, clientViewModel.PhoneNumber,
-                 clientViewModel.Email, clientViewModel.IsAdult);
+            this.clientService.Edit(clientViewModel);
 
             return this.RedirectToAction("List");
         }
@@ -75,27 +72,24 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public JsonResult SearchClients(string term)
         {
-            var clients = new List<ClientViewModel>();
+            var foundClients = new List<ClientViewModel>();
 
-            foreach (var client in this.clientService.GetAll())
-            {
-                var clientViewModel = new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email,
-                    client.IsAdult);
-
-                clients.Add(clientViewModel);
-            }
 
             if (term != null)
             {
                 term = term.ToLower();
 
-                clients = clients
+                foundClients = this.clients
                     .Where(x => x.FirstName.ToLower().Contains(term)
                     || x.ThirdName.ToLower().Contains(term))
                     .ToList();
             }
+            else
+            {
+                foundClients = this.clients;
+            }
 
-            return Json(clients);
+            return Json(foundClients);
         }
     }
 }

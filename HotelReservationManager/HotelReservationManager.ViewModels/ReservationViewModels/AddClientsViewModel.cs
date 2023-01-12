@@ -1,4 +1,5 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.ClientViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,10 +26,10 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
 
         public int AdultsCount { get; set; }
 
-        public IEnumerable<Client> Adults{ get; set; }
+        public IEnumerable<ClientViewModel> Adults{ get; set; }
 
         public int ChildrensCount { get; set; }
 
-        public IEnumerable<Client> Childrens { get; set; }
+        public IEnumerable<ClientViewModel> Childrens { get; set; }
     }
 }

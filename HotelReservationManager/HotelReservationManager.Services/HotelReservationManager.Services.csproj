@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HotelReservationManager.Data.Models\HotelReservationManager.Data.Models.csproj" />
     <ProjectReference Include="..\HotelReservationManager.Data\HotelReservationManager.Data.csproj" />
+	<ProjectReference Include="..\HotelReservationManager.ViewModels\HotelReservationManager.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
