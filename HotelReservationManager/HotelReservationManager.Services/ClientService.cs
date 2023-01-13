@@ -36,7 +36,7 @@ namespace HotelReservationManager.Services
 
         public void Delete(string clientId)
         {
-            var client = GetById(clientId);
+            var client = GetDataModelById(clientId);
 
             foreach (var clientReservation in client.ClientsReservations)
             {
@@ -52,7 +52,7 @@ namespace HotelReservationManager.Services
 
         public void Edit(ClientViewModel clientViewModel)
         {
-            var client = GetById(clientViewModel.Id);
+            var client = GetDataModelById(clientViewModel.Id);
 
             client.FirstName = clientViewModel.FirstName;
             client.ThirdName = clientViewModel.ThirdName;
@@ -68,16 +68,16 @@ namespace HotelReservationManager.Services
             return this.dbContext.Clients
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.ThirdName)
-                .Select(x => ToClientViewModel(x))
+                .Select(x => ToViewModel(x))
                 .ToList();
         }
 
-        public Client GetById(string id)
+        public Client GetDataModelById(string id)
         {
             return this.dbContext.Clients.FirstOrDefault(x => x.Id == id);
         }
 
-        private static ClientViewModel ToClientViewModel(Client client)
+        private static ClientViewModel ToViewModel(Client client)
         {
             return new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email, client.IsAdult);
         }

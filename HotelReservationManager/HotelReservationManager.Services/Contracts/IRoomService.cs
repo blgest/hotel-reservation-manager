@@ -1,4 +1,5 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.RoomViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,16 +8,16 @@ namespace HotelReservationManager.Services.Contracts
 {
     public interface IRoomService
     {
-        void Create(int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChild, int number);
+        void Create(CreateRoomViewModel createRoomViewModel);
 
         void Delete(string roomId);
 
-        void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number);
+        void Edit(RoomViewModel roomViewModel);
 
-        IEnumerable<Room> GetAll();
+        List<RoomViewModel> GetAll();
 
-        IEnumerable<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type);
+        List<RoomViewModel> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type);
 
-        Room GetById(string id);
+        Room GetDataModelById(string id);
     }
 }

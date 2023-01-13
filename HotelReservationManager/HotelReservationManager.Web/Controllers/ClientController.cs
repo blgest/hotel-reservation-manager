@@ -72,12 +72,11 @@ namespace HotelReservationManager.Web.Controllers
         {
             var client = clients.FirstOrDefault(x => x.Id == id);
 
-            if (client != null)
+            if (client == null)
             {
-                return this.View(client);
+                return this.RedirectToAction("List");
             }
-
-            return this.RedirectToAction("List");
+            return this.View(client);
         }
 
         [HttpPost]

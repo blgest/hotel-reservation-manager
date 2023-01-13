@@ -17,6 +17,6 @@ namespace HotelReservationManager.Services.Contracts
 
         List<ClientViewModel> GetAll();
 
-        Client GetById(string id);
+        Client GetDataModelById(string id);
     }
 }
