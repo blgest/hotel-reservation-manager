@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
-using HotelReservationManager.ViewModels.ClientViewModels;
 using HotelReservationManager.ViewModels.RoomViewModels;
 using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.Language.Intermediate;
 
 namespace HotelReservationManager.Web.Controllers
 {
@@ -24,15 +22,14 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var createUserViewModel = new CreateRoomViewModel();
-            return this.View(createUserViewModel);
+            var createRoomViewModel = new CreateRoomViewModel();
+            return this.View(createRoomViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomViewModel createRoomViewModel)
         {
             this.roomService.Create(createRoomViewModel);
-
             return this.RedirectToAction("List");
         }
 

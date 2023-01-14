@@ -1,4 +1,5 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.UserViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,15 +14,12 @@ namespace HotelReservationManager.Services.Contracts
 
         void Activate(string hotelUserId);
 
-        void Edit(string id, string username, string firstName, string secondName, string thirdName, string ucn,
-            string phoneNumber, string email, DateTime startDate, DateTime endDate);
+        void Edit(UserViewModel user);
 
         HotelUser GetCurrent(string concurrencyStamp);
 
-        public IEnumerable<HotelUser> GetAllActive();
+        public List<UserViewModel> GetAll();
 
-        public IEnumerable<HotelUser> GetAllBlocked();
-
-        HotelUser GetById(string id);
+        HotelUser GetDataModelById(string id);
     }
 }

@@ -41,7 +41,7 @@ namespace HotelReservationManager.Web.Controllers
         public async Task<IActionResult> Create(string id, int adultsCount, int childrensCount, DateTime startDate,
             DateTime endDate, RoomType roomType, string rooms, bool breakfast, bool allInclusive, double price)
         {
-            var hotelUser = this.hotelUserService.GetById(id);
+            var hotelUser = this.hotelUserService.GetDataModelById(id);
 
             var room = this.roomService.GetDataModelById(rooms);
 

@@ -24,8 +24,8 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var createUserViewModel = new CreateClientViewModel();
-            return this.View(createUserViewModel);
+            var createClientViewModel = new CreateClientViewModel();
+            return this.View(createClientViewModel);
 
         }
 
@@ -33,7 +33,6 @@ namespace HotelReservationManager.Web.Controllers
         public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel)
         {
             this.clientService.Create(createClientViewModel);
-
             return this.RedirectToAction("List");
         }
 
