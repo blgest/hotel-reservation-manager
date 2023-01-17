@@ -121,7 +121,16 @@
     var childrens = document.getElementById("childrens");
     var price = document.getElementById("price");
     var rooms = document.getElementById("rooms");
-    var room = document.getElementById("selected").value;
+    var roomTypes = document.getElementsByName("roomType");
+    var type = ""
+    var room = "";
+
+    const today = new Date()
+    startDt.valueAsDate = today;
+
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    endDt.valueAsDate = tomorrow;
 
     function calculatePrice() {
         $.ajax({
@@ -146,26 +155,76 @@
         });
     }
 
+    function filtrateRooms() {
+        $.ajax({
+            url: "/Reservation/FiltrateRooms",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            data: {
+                startDate: startDt.value,
+                endDate: endDt.value,
+                adultsCount: adults.value,
+                childrensCount: childrens.value,
+                roomType: type.value
+            },
+            success: function (items) {
+                items.forEach(item => {
+                    var option = document.createElement("option");
+                    option.text = item.number;
+                    option.value = item.id;
+                    rooms.appendChild(option);
+                });
+            },
+            error: function (response) {
+                debugger;
+                alert('eror');
+            }
+        });
+    }
 
-    adults.addEventListener('change', function () {
-        calculatePrice()
+    function roomsClear() {
+        for (var i = rooms.childElementCount; i >= 1; i--) {
+            rooms.remove(i);
+        }
+    }
+
+    adults.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
+        calculatePrice();
     });
 
-    childrens.addEventListener('change', function () {
-        calculatePrice()
+    childrens.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
+        calculatePrice();
     });
 
-    startDt.addEventListener('change', function () {
-        calculatePrice()
+    startDt.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
+        calculatePrice();
     });
 
-    endDt.addEventListener('change', function () {
-        calculatePrice()
+    endDt.addEventListener('input', function () {
+        removeUnappropriateRooms();
+        filtrateRooms();
+        calculatePrice();
     });
 
     rooms.addEventListener('change', (e) => {
+        console.log("room");
         room = e.target.value;
         calculatePrice();
+    });
+
+    roomTypes.forEach(roomType => {
+        roomType.onclick = function () {
+            type = roomType;
+            roomsClear();
+            filtrateRooms();
+        }
     });
 </script>
 

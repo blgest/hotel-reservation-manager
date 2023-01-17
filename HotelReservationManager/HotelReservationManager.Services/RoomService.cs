@@ -20,7 +20,7 @@ namespace HotelReservationManager.Services
         }
 
 
-        public void Create(CreateRoomViewModel  createRoomViewModel)
+        public void Create(CreateRoomViewModel createRoomViewModel)
         {
             var newRoom = new Room(
                 Guid.NewGuid().ToString(),
@@ -39,7 +39,7 @@ namespace HotelReservationManager.Services
         {
             var room = GetDataModelById(roomId);
 
-            foreach (var reservation in this.dbContext.Reservations.Include(x=>x.Room).Include(x=>x.ClientsReservations))
+            foreach (var reservation in this.dbContext.Reservations.Include(x => x.Room).Include(x => x.ClientsReservations))
             {
                 if (reservation.Room == room)
                 {
@@ -78,7 +78,7 @@ namespace HotelReservationManager.Services
                 .OrderBy(x => x.Number)
                 .ThenBy(x => x.Type)
                 .ThenBy(x => x.Capacity)
-                .Select(x=>ToViewModel(x))
+                .Select(x => ToViewModel(x))
                 .ToList();
         }
 
@@ -88,7 +88,8 @@ namespace HotelReservationManager.Services
 
             rooms = this.dbContext.Rooms
                 .Where(r => r.Capacity >= capacity && r.Type == type)
-                .Select(x=>ToViewModel(x))
+                .OrderBy(x => x.Number)
+                .Select(x => ToViewModel(x))
                 .ToList();
 
             foreach (var reservation in this.dbContext.Reservations)

@@ -56,7 +56,7 @@ namespace HotelReservationManager.Web.Controllers
             {
                 searchString = searchString.ToLower();
 
-                foundClients = this.clients.AsQueryable()
+                foundClients = this.clients
                     .Where(x => x.FirstName.ToLower().Contains(searchString)
                     || x.ThirdName.ToLower().Contains(searchString)).ToList();
             }

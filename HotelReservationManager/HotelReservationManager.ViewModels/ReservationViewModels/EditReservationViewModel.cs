@@ -59,5 +59,7 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
         [Required]
         [Range(10, 50000, ErrorMessage = "The reservation should be in range from 10 to 50,000")]
         public double Price { get; set; }
+
+        public HotelUser User { get; set; }
     }
 }

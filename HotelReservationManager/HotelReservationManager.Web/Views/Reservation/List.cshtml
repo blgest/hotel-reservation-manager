@@ -1,4 +1,6 @@
-﻿<div class="container">
+﻿@model PaginatedList<HotelReservationManager.ViewModels.ReservationViewModels.ReservationViewModel>
+
+<div class="container">
 
     <h1 class="mt-4 mb-3">Reservations</h1>
 
@@ -9,225 +11,75 @@
         <li class="breadcrumb-item active">Reservations</li>
     </ol>
 
-    <div class="card mb-4">
-        <h5 class="card-header">Search</h5>
-        <div class="card-body">
-            <div class="input-group">
-                <input id="search" type="text" class="form-control" placeholder="Search by Date">
+    <form asp-action="List" method="get">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="input-group">
+                    <input type="text" name="SearchString" class="form-control" placeholder="Search by date" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                    <a asp-action="List" class="btn btn-default" role="button">Back</a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <div id="reservations">
-
+        @foreach (var reservation in Model)
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h3 class="card-title">Period: @reservation.StartDate.ToShortDateString() - @reservation.EndDate.Date.ToShortDateString()</h3>
+                            <p>Room Number: @reservation.Room.Number</p>
+                            <p>Registrated By: @reservation.User.UserName</p>
+                            <p>Adults Count: @reservation.AdultsCount</p>
+                            <p>Childrens Count: @reservation.ChildrensCount</p>
+                            <p>Breakfast: @reservation.Breakfast</p>
+                            <p>All inclusive: @reservation.AllInclusive</p>
+                            <p>Price: @reservation.Price</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    @if (reservation.ClientsReservationsCount == 0)
+                    {
+                        <a class="btn btn-primary" asp-controller="Reservation" asp-action="AddClients" asp-route-id="@reservation.Id">Add Clients</a>
+                    }
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Details" asp-route-id="@reservation.Id">Details</a>
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Edit" asp-route-id="@reservation.Id">Edit</a>
+                    <a class="btn btn-primary" asp-controller="Reservation" asp-action="Delete" asp-route-id="@reservation.Id">Delete</a>
+                </div>
+            </div>
+        }
     </div>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
 
     <ul class="pagination justify-content-center">
         <li class="page-item">
-            <a class="page-link" onclick="prevPage()" id="btn_prev" aria-label="Previous">
+            <a asp-action="List"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link @prevDisabled">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
             </a>
         </li>
         <li class="page-item">
-            <a class="page-link" id="page"></a>
+            <a class="page-link">@Model.PageIndex</a>
         </li>
         <li class="page-item">
-            <a class="page-link" onclick="nextPage()" id="btn_next" aria-label="Next">
+            <a asp-action="List"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link @nextDisabled">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>
             </a>
         </li>
     </ul>
-
 </div>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script>
-    const records_per_page = 5;
-
-    var search = document.getElementById("search");
-    var reservations = document.getElementById("reservations");
-    var btn_next = document.getElementById("btn_next");
-    var btn_prev = document.getElementById("btn_prev");
-    var page_number = document.getElementById("page");
-
-    let current_page = 1;
-    let reservationsHTML = [];
-
-    function searchReservations() {
-        $.ajax({
-            url: "/Reservation/SearchReservations",
-            type: "GET",
-            dataType: "json",
-            async: true,
-            data: {
-                term: search.value
-            },
-            success: function (items) {
-                reservationsHTML = [];
-                items.forEach(item => {
-                    createReservationCard(item);
-                });
-
-                changePage(current_page);
-            },
-            error: function (response) {
-                debugger;
-                alert('eror');
-            }
-        });
-    }
-
-    searchReservations();
-
-    function createReservationCard(item) {
-        console.log(item);
-        var card = document.createElement("div");
-        var cardBody = document.createElement("div");
-        var rowStart = document.createElement("div");
-        var sizeInCols = document.createElement("div");
-        var period = document.createElement("h2");
-        var roomNumber = document.createElement("p");
-        var hotelUser = document.createElement("p");
-        var adultsCount = document.createElement("p");
-        var childrensCount = document.createElement("p");
-        var breakfast = document.createElement("p");
-        var allInclusive = document.createElement("p");
-        var price = document.createElement("p");
-        var footer = document.createElement("div");
-        var whiteSpace1 = document.createElement("span");
-        var whiteSpace2 = document.createElement("span");
-        var whiteSpace3 = document.createElement("span");
-        var whiteSpace4 = document.createElement("span");
-        var addClientsButton = document.createElement("a");
-        var detailsButton = document.createElement("a");
-        var editButton = document.createElement("a");
-        var deleteButton = document.createElement("a");
-
-        card.className = "card mb-4"
-        cardBody.className = "card-body";
-        rowStart.className = "row";
-        sizeInCols.className = "col-lg-6";
-        period.innerHTML = "Period: " + new Date(item.startDate).toLocaleDateString() + " - " + new Date(item.endDate).toLocaleDateString();
-        roomNumber.innerHTML = "Number: " + item.roomNumber;
-        hotelUser.innerHTML = "Registrated by: " + item.username
-        adultsCount.innerHTML = "Adults Count: " + item.adultsCount;
-        childrensCount.innerHTML = "Childrens Count: " + item.childrensCount;
-        breakfast.innerHTML = "Breakfast: " + item.breakfast;
-        allInclusive.innerHTML = "All Inclusive: " + item.allInclusive;
-        price.innerHTML = "Price: " + item.price;
-        footer.className = "card-footer text-muted";
-
-        whiteSpace1.innerHTML = "&nbsp;";
-        whiteSpace2.innerHTML = "&nbsp;";
-        whiteSpace3.innerHTML = "&nbsp;";
-
-        if (item.clientsReservationsCount == 0) {
-            addClientsButton.className = "btn btn-primary";
-            addClientsButton.href = "/Reservation/AddClients/" + item.id;
-            addClientsButton.innerHTML = "Add Clients"
-
-            footer.appendChild(addClientsButton);
-            footer.appendChild(whiteSpace3);
-        }
-
-        detailsButton.className = "btn btn-primary";
-        detailsButton.href = "/Reservation/Details/" + item.id;
-        detailsButton.innerHTML = "Details"
-        editButton.className = "btn btn-primary";
-        editButton.href = "/Reservation/Edit/" + item.id;
-        editButton.innerHTML = "Edit"
-        deleteButton.className = "btn btn-primary";
-        deleteButton.href = "/Reservation/Delete/" + item.id;
-        deleteButton.innerHTML = "Delete";
-
-        card.appendChild(cardBody);
-        cardBody.appendChild(rowStart);
-        rowStart.appendChild(sizeInCols);
-        sizeInCols.appendChild(period);
-        sizeInCols.appendChild(hotelUser);
-        sizeInCols.appendChild(roomNumber);
-        sizeInCols.appendChild(adultsCount);
-        sizeInCols.appendChild(childrensCount);
-        sizeInCols.appendChild(breakfast);
-        sizeInCols.appendChild(allInclusive);
-        sizeInCols.appendChild(price);
-        card.appendChild(footer);
-
-        footer.appendChild(detailsButton);
-        footer.appendChild(whiteSpace1);
-        footer.appendChild(editButton);
-        footer.appendChild(whiteSpace2);
-        footer.appendChild(deleteButton);
-
-        reservationsHTML.push(card);
-    }
-
-    function removeReservations() {
-        for (var i = reservations.children.length - 1; i >= 0; i--) {
-            reservations.removeChild(reservations.children[i]);
-        }
-    }
-
-    function prevPage() {
-        if (current_page > 1) {
-            current_page--;
-            changePage(current_page);
-        }
-    }
-
-    function nextPage() {
-        if (current_page < numPages()) {
-            current_page++;
-            changePage(current_page);
-        }
-    }
-
-    function changePage(page) {
-        if (page < 1) {
-            page = 1
-        };
-
-        if (page > numPages()) {
-            page = numPages()
-        };
-
-        removeReservations();
-
-        for (var i = (page - 1) * records_per_page; i < (page * records_per_page); i++) {
-            if (reservationsHTML.length - 1 >= i && i >= 0) {
-                reservations.appendChild(reservationsHTML[i]);
-            }
-        }
-        page_number.innerHTML = page;
-
-        if (page == 1) {
-            btn_prev.style.visibility = "hidden";
-        } else {
-            btn_prev.style.visibility = "visible";
-        }
-
-        if (page == numPages()) {
-            btn_next.style.visibility = "hidden";
-        } else {
-            btn_next.style.visibility = "visible";
-        }
-    }
-
-    function numPages() {
-        return Math.ceil(reservationsHTML.length / records_per_page);
-    }
-
-    window.onload = function () {
-        searchReservations();
-        changePage(1);
-    };
-
-    search.addEventListener("input", function () {
-        removeReservations();
-        searchReservations();
-    });
-</script>

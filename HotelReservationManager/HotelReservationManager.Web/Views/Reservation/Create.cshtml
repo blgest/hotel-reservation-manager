@@ -86,7 +86,7 @@
         <div class="form-group">
             <label asp-for="Rooms">Rooms:</label>
             <div class="form-group">
-                <select id="rooms" name="rooms">
+                <select id="rooms" name="roomId">
                     <option value="">Please select one</option>
                 </select>
                 <span asp-validation-for="Rooms" class="text-danger"></span>
@@ -180,13 +180,11 @@
         });
     }
 
-    function removeUnappropriateRooms() {
-        for (var i = 1; i < rooms.length; i++) {
+    function roomsClear() {
+        for (var i = rooms.childElementCount; i >=1 ; i--) {
             rooms.remove(i);
         }
     }
-
-    filtrateRooms();
 
     adults.addEventListener('input', function () {
         removeUnappropriateRooms();
@@ -221,7 +219,7 @@
     roomTypes.forEach(roomType => {
         roomType.onclick = function () {
             type = roomType;
-            removeUnappropriateRooms();
+            roomsClear();
             filtrateRooms();
         }
     });
