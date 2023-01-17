@@ -1,30 +1,37 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.RoomViewModels;
 using System;
+using System.Collections.Generic;
 
 namespace HotelReservationManager.ViewModels.ReservationViewModels
 {
     public class ReservationViewModel
     {
-        public ReservationViewModel(string id, string username, DateTime startDate, DateTime endDate, int adultsCount, int childrensCount,
-            RoomType roomType, int roomNumber, bool breakfast, bool allInclusive, double price, int clientsReservationsCount)
+        public ReservationViewModel(string id, HotelUser user, DateTime startDate, DateTime endDate,
+            int adultsCount, int childrensCount, RoomType roomType, Room room, bool breakfast, bool allInclusive,
+            double price, int clientsReservationsCount)
         {
             Id = id;
-            Username = username;
+            User = user;
             StartDate = startDate;
             EndDate = endDate;
             AdultsCount = adultsCount;
             ChildrensCount = childrensCount;
             RoomType = roomType;
-            RoomNumber = roomNumber;
+            Room = room;
             Breakfast = breakfast;
             AllInclusive = allInclusive;
             Price = price;
             ClientsReservationsCount = clientsReservationsCount;
         }
 
-        public string Id { get; set; }
+        public ReservationViewModel()
+        {
 
-        public string Username { get; set; }
+        }
+
+        public string Id { get; set; }
+        public HotelUser User { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -36,8 +43,9 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
 
         public RoomType RoomType { get; set; }
 
-        public int RoomNumber { get; set; }
+        public List<Room> Rooms { get; set; }
 
+        public Room Room { get; set; }
         public bool Breakfast { get; set; }
 
         public bool AllInclusive { get; set; }

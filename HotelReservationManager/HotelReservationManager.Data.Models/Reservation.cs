@@ -8,9 +8,9 @@ namespace HotelReservationManager.Data.Models
     {
         public string Id { get; set; }
 
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
-        public HotelUser User { get; set; }
+        public virtual HotelUser User { get; set; }
 
         public int AdultsCount { get; set; }
 
@@ -28,6 +28,6 @@ namespace HotelReservationManager.Data.Models
 
         public double Price { get; set; }
 
-        public ICollection<ClientReservations> ClientsReservations { get; set; }
+        public virtual ICollection<ClientReservations> ClientsReservations { get; set; }
     }
 }

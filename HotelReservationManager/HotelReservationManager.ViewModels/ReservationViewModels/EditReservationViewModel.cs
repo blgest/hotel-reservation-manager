@@ -1,4 +1,5 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.RoomViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
     public class EditReservationViewModel
     {
         public EditReservationViewModel(string id, DateTime startDate, DateTime endDate, int adultsCount, 
-            int childrensCount, RoomType roomType, Room room, bool breakfast, bool allInclusive, double price, IEnumerable<Room> rooms)
+            int childrensCount, RoomType roomType, Room room, bool breakfast, bool allInclusive, double price, List<RoomViewModel> rooms)
         {
             Id = id;
             StartDate = startDate;
@@ -46,7 +47,7 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
         public RoomType RoomType { get; set; }
 
         [Required(ErrorMessage = "Must be selected some Room")]
-        public IEnumerable<Room> Rooms { get; set; }
+        public List<RoomViewModel> Rooms { get; set; }
 
         public Room Room { get; set; }
 
@@ -58,5 +59,7 @@ namespace HotelReservationManager.ViewModels.ReservationViewModels
         [Required]
         [Range(10, 50000, ErrorMessage = "The reservation should be in range from 10 to 50,000")]
         public double Price { get; set; }
+
+        public HotelUser User { get; set; }
     }
 }

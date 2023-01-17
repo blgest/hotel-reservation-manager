@@ -1,66 +1,87 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.ClientViewModels;
+using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservationManager.Web.Controllers
 {
     public class ClientController : Controller
     {
         private readonly IClientService clientService;
+        private readonly List<ClientViewModel> clients;
 
         public ClientController(IClientService clientService)
         {
             this.clientService = clientService;
+            this.clients = this.clientService.GetAll();
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var createUserViewModel = new CreateClientViewModel();
-            return this.View(createUserViewModel);
+            var createClientViewModel = new CreateClientViewModel();
+            return this.View(createClientViewModel);
 
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel)
         {
-            this.clientService.Create(
-                createClientViewModel.FirstName,
-                createClientViewModel.ThirdName,
-                createClientViewModel.PhoneNumber,
-                createClientViewModel.Email,
-                createClientViewModel.Years);
-
+            this.clientService.Create(createClientViewModel);
             return this.RedirectToAction("List");
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundClients = this.clients;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+
+                foundClients = this.clients
+                    .Where(x => x.FirstName.ToLower().Contains(searchString)
+                    || x.ThirdName.ToLower().Contains(searchString)).ToList();
+            }
+
+            int pageSize = 5;
+            return View(PaginatedList<ClientViewModel>.Create(foundClients, pageNumber ?? 1, pageSize));
+
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var client = this.clientService.GetById(id);
+            var client = clients.FirstOrDefault(x => x.Id == id);
 
-            var editClientViewModel = new ClientViewModel(client.Id, client.FirstName,
-                client.ThirdName, client.Telephone, client.Email,
-                client.IsAdult);
-
-            return this.View(editClientViewModel);
+            if (client == null)
+            {
+                return this.RedirectToAction("List");
+            }
+            return this.View(client);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ClientViewModel clientViewModel)
         {
-            this.clientService.Edit(clientViewModel.Id, clientViewModel.FirstName,
-                clientViewModel.ThirdName, clientViewModel.PhoneNumber,
-                 clientViewModel.Email, clientViewModel.IsAdult);
+            this.clientService.Edit(clientViewModel);
 
             return this.RedirectToAction("List");
         }
@@ -70,32 +91,6 @@ namespace HotelReservationManager.Web.Controllers
             this.clientService.Delete(id);
 
             return this.RedirectToAction("List");
-        }
-
-        [HttpGet]
-        public JsonResult SearchClients(string term)
-        {
-            var clients = new List<ClientViewModel>();
-
-            foreach (var client in this.clientService.GetAll())
-            {
-                var clientViewModel = new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email,
-                    client.IsAdult);
-
-                clients.Add(clientViewModel);
-            }
-
-            if (term != null)
-            {
-                term = term.ToLower();
-
-                clients = clients
-                    .Where(x => x.FirstName.ToLower().Contains(term)
-                    || x.ThirdName.ToLower().Contains(term))
-                    .ToList();
-            }
-
-            return Json(clients);
         }
     }
 }

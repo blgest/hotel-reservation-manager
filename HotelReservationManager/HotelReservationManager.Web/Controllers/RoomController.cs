@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.RoomViewModels;
+using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationManager.Web.Controllers
@@ -10,53 +11,75 @@ namespace HotelReservationManager.Web.Controllers
     public class RoomController : Controller
     {
         private readonly IRoomService roomService;
+        private readonly List<RoomViewModel> rooms;
 
         public RoomController(IRoomService roomService)
         {
             this.roomService = roomService;
+            rooms = roomService.GetAll();
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var createUserViewModel = new CreateRoomViewModel();
-            return this.View(createUserViewModel);
+            var createRoomViewModel = new CreateRoomViewModel();
+            return this.View(createRoomViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomViewModel createRoomViewModel)
         {
-            this.roomService.Create(
-                createRoomViewModel.Capacity,
-                createRoomViewModel.Type,
-                createRoomViewModel.PriceOnBedForAdult, createRoomViewModel.PriceOnBedForChildren,
-                createRoomViewModel.Number);
-
+            this.roomService.Create(createRoomViewModel);
             return this.RedirectToAction("List");
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View();
+            var term = 0;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+                term = int.Parse(searchString);
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundRooms = this.rooms;
+
+            if (term > 0)
+            {
+                foundRooms = rooms
+                    .Where(x => x.Number.ToString().Contains(term.ToString()) || x.Capacity >= term)
+                    .ToList();
+            }
+
+            int pageSize = 5;
+            return View(PaginatedList<RoomViewModel>.Create(foundRooms, pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var room = this.roomService.GetById(id);
+            var room = this.rooms.FirstOrDefault(x => x.Id == id);
 
-            var editClientViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.PriceOnBedAdult,
-                room.PriceOnBedChildren, room.Number);
+            if (room == null)
+            {
+                return this.RedirectToAction("List");
+            }
 
-            return this.View(editClientViewModel);
+            return this.View(room);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(RoomViewModel roomViewModel)
         {
-            this.roomService.Edit(roomViewModel.Id, roomViewModel.Capacity, roomViewModel.Type, roomViewModel.PriceOnBedForAdult,
-                roomViewModel.PriceOnBedForChildren, roomViewModel.Number);
+            this.roomService.Edit(roomViewModel);
 
             return this.RedirectToAction("List");
         }
@@ -66,28 +89,6 @@ namespace HotelReservationManager.Web.Controllers
             this.roomService.Delete(id);
 
             return this.RedirectToAction("List");
-        }
-
-        [HttpGet]
-        public JsonResult SearchRooms(int term)
-        {
-            var rooms = new List<RoomViewModel>();
-
-            foreach (var room in this.roomService.GetAll())
-            {
-                var roomViewModel = new RoomViewModel(room.Id, room.Capacity, room.Type, room.PriceOnBedAdult,
-                    room.PriceOnBedChildren, room.Number);
-
-                rooms.Add(roomViewModel);
-            }
-
-            if (term > 0)
-            {
-                rooms = rooms.Where(x => x.Number == term || x.Capacity >= term)
-                    .ToList();
-            }
-
-            return Json(rooms);
         }
     }
 }

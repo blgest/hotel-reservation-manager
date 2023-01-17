@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using HotelReservationManager.ViewModels.ClientViewModels;
 using HotelReservationManager.ViewModels.ReservationViewModels;
+using HotelReservationManager.ViewModels.RoomViewModels;
+using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationManager.Web.Controllers
@@ -12,12 +15,10 @@ namespace HotelReservationManager.Web.Controllers
     public class ReservationController : Controller
     {
         private readonly IReservationService reservationService;
-
         private readonly IClientService clientService;
-
         private readonly IRoomService roomService;
-
         private readonly IHotelUserService hotelUserService;
+        private readonly List<ReservationViewModel> reservations;
 
         public ReservationController(IReservationService reservationService, IClientService clientService,
             IRoomService roomService, IHotelUserService hotelUserService)
@@ -26,6 +27,7 @@ namespace HotelReservationManager.Web.Controllers
             this.clientService = clientService;
             this.roomService = roomService;
             this.hotelUserService = hotelUserService;
+            this.reservations = reservationService.GetAll();
         }
 
 
@@ -37,35 +39,56 @@ namespace HotelReservationManager.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string id, int adultsCount, int childrensCount, DateTime startDate,
-            DateTime endDate, RoomType roomType, string rooms, bool breakfast, bool allInclusive, double price)
+        public async Task<IActionResult> Create(CreateReservationViewModel createReservationViewModel)
         {
-            var hotelUser = this.hotelUserService.GetById(id);
+            createReservationViewModel.User = this.hotelUserService.GetDataModelById(createReservationViewModel.Id);
+            createReservationViewModel.Room = this.roomService.GetDataModelById(createReservationViewModel.RoomId);
 
-            var room = this.roomService.GetById(rooms);
-
-            this.reservationService.Create(room, hotelUser, adultsCount, childrensCount, startDate, endDate, breakfast,
-                allInclusive, price, roomType);
+            this.reservationService.Create(createReservationViewModel);
 
             return this.RedirectToAction("List");
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundReservations = this.reservations;
+
+            DateTime date;
+
+            if (DateTime.TryParse(searchString, out date))
+            {
+                foundReservations = reservations
+                    .Where(x => x.StartDate == date
+                    || x.EndDate == date)
+                    .ToList();
+            }
+
+            int pageSize = 5;
+            return View(PaginatedList<ReservationViewModel>.Create(foundReservations, pageNumber ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Details(string id)
         {
-            var reservation = this.reservationService.GetById(id);
+            var reservation = this.reservationService.GetDataModelById(id);
 
             var adults = new List<Client>();
             var childrens = new List<Client>();
 
             foreach (var clientReservation in reservation.ClientsReservations)
             {
-                var client = this.clientService.GetById(clientReservation.ClientId);
+                var client = this.clientService.GetDataModelById(clientReservation.ClientId);
 
                 if (client.IsAdult == true)
                 {
@@ -87,7 +110,7 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var reservation = this.reservationService.GetById(id);
+            var reservation = this.reservationService.GetDataModelById(id);
 
             var editReservation = new EditReservationViewModel(reservation.Id, reservation.StartDate,
                 reservation.EndDate, reservation.AdultsCount, reservation.ChildrensCount, reservation.RoomType,
@@ -100,7 +123,7 @@ namespace HotelReservationManager.Web.Controllers
         public async Task<IActionResult> Edit(string id, DateTime startDate, DateTime endDate, int adultsCount,
             int childrensCount, RoomType roomType, string rooms, bool breakfast, bool allInclusive, double price)
         {
-            var room = this.roomService.GetById(rooms);
+            var room = this.roomService.GetDataModelById(rooms);
 
             this.reservationService.Edit(id, startDate, endDate, adultsCount, childrensCount, roomType, room, breakfast,
                 allInclusive, price);
@@ -118,7 +141,7 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddClients(string id)
         {
-            var reservation = this.reservationService.GetById(id);
+            var reservation = this.reservationService.GetDataModelById(id);
 
             var addClientsViewModel = new AddClientsViewModel(id, reservation.AdultsCount, reservation.ChildrensCount);
 
@@ -142,13 +165,13 @@ namespace HotelReservationManager.Web.Controllers
 
             foreach (var adultId in adults)
             {
-                var adult = this.clientService.GetById(adultId);
+                var adult = this.clientService.GetDataModelById(adultId);
                 clients.Add(adult);
             }
 
             foreach (var childrenId in childrens)
             {
-                var children = this.clientService.GetById(childrenId);
+                var children = this.clientService.GetDataModelById(childrenId);
                 clients.Add(children);
             }
 
@@ -160,17 +183,8 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public JsonResult FiltrateRooms(DateTime startDate, DateTime endDate, int adultsCount, int childrensCount, RoomType roomType)
         {
-            IEnumerable<Room> rooms = new List<Room>();
-
-            if (startDate == default(DateTime) && endDate == default(DateTime) && adultsCount == 0 && childrensCount == 0)
-            {
-                rooms = this.roomService.GetAll().OrderBy(x => x.Number).Where(x => x.Type == roomType);
-            }
-            else
-            {
-                rooms = this.roomService.GetAllFreeRoomsByRequirments(startDate, endDate, childrensCount + adultsCount, roomType);
-            }
-
+            var rooms = this.roomService.GetAllFreeRoomsByRequirments(startDate, endDate, childrensCount + adultsCount, roomType);
+            
             return Json(rooms);
         }
 
@@ -178,42 +192,14 @@ namespace HotelReservationManager.Web.Controllers
         {
             double price = 0.0;
 
-            if (roomId != null && startDate != default(DateTime) && endDate != default(DateTime))
+            if (roomId != null)
             {
-                var room = this.roomService.GetById(roomId);
+                var room = this.roomService.GetDataModelById(roomId);
 
                 price = this.reservationService.CalculatePrice(adultsCount, childrensCount, room, startDate, endDate);
             }
 
-
             return Json(price);
-        }
-
-        [HttpGet]
-        public JsonResult SearchReservations(string term)
-        {
-            var reservations = new List<ReservationViewModel>();
-
-            foreach (var reservation in this.reservationService.GetAll())
-            {
-                var reservationViewModel = new ReservationViewModel(reservation.Id, reservation.User.UserName, reservation.StartDate, 
-                    reservation.EndDate, reservation.AdultsCount, reservation.ChildrensCount, reservation.Room.Type, reservation.Room.Number,
-                    reservation.Breakfast, reservation.AllInclusive, reservation.Price, reservation.ClientsReservations.Count);
-
-                reservations.Add(reservationViewModel);
-            }
-
-            DateTime date;
-
-            if (DateTime.TryParse(term, out date))
-            {
-                reservations = reservations
-                    .Where(x => x.StartDate == date
-                    || x.EndDate == date)
-                    .ToList();
-            }
-
-            return Json(reservations);
         }
     }
 }

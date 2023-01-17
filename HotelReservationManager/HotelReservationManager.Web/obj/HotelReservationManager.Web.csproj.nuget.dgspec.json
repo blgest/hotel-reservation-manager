@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -30,8 +30,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -42,18 +42,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             },
             "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             }
           },
           "imports": [
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -94,7 +94,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -102,8 +102,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
                 "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
@@ -118,26 +118,26 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
             }
           },
           "imports": [
@@ -156,7 +156,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -178,7 +178,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -186,14 +186,17 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
                 "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
               },
               "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj": {
                 "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data\\HotelReservationManager.Data.csproj"
+              },
+              "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj": {
+                "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.ViewModels\\HotelReservationManager.ViewModels.csproj"
               }
             }
           }
@@ -205,8 +208,8 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "imports": [
             "net461",
             "net462",
@@ -223,7 +226,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -245,7 +248,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -253,14 +256,11 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
                 "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
-              },
-              "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj": {
-                "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Services\\HotelReservationManager.Services.csproj"
               }
             }
           }
@@ -272,8 +272,8 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
@@ -300,7 +300,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -322,7 +322,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -330,8 +330,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {
               "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj": {
                 "projectPath": "C:\\Users\\Blagovest\\Desktop\\hotel-reservation-manager\\HotelReservationManager\\HotelReservationManager.Data.Models\\HotelReservationManager.Data.Models.csproj"
@@ -355,28 +355,44 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[6.0.13, )"
+            },
+            "Microsoft.AspNetCore.JsonPatch": {
+              "target": "Package",
+              "version": "[6.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[6.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[6.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[6.0.13, )"
+            },
+            "Microsoft.Extensions.Caching.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[6.0.11, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [
@@ -398,7 +414,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

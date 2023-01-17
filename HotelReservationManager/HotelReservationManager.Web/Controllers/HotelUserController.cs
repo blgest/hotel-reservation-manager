@@ -6,37 +6,65 @@ using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using HotelReservationManager.Data.Models;
+using HotelReservationManager.Web.Models;
 
 namespace HotelReservationManager.Web.Controllers
 {
     public class HotelUserController : Controller
     {
         private readonly IHotelUserService hotelUserService;
+        private readonly List<UserViewModel> users;
 
-        private readonly UserManager<HotelUser> userManager;
-
-        public HotelUserController(IHotelUserService hotelUserService, UserManager<HotelUser> userManager)
+        public HotelUserController(IHotelUserService hotelUserService)
         {
             this.hotelUserService = hotelUserService;
-            this.userManager = userManager;
+            this.users = this.hotelUserService.GetAll();
         }
 
         //Create -> Identity -> Register
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ActiveList()
+        public async Task<IActionResult> ActiveList(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundUsers = SearchUsers(searchString)
+                .Where(x => x.EndDate == default(DateTime))
+                .ToList();
+
+            int pageSize = 5;
+            return View(PaginatedList<UserViewModel>.Create(foundUsers, pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> BlockedList()
+        public async Task<IActionResult> BlockedList(string currentFilter, string searchString, int? pageNumber)
         {
-            return this.View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var foundUsers = SearchUsers(searchString).Where(x => x.EndDate != default(DateTime)).ToList();
+
+            int pageSize = 5;
+            return View(PaginatedList<UserViewModel>.Create(foundUsers, pageNumber ?? 1, pageSize));
         }
 
 
@@ -44,23 +72,20 @@ namespace HotelReservationManager.Web.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditActiveUser(string id)
         {
-            var activeUser = this.hotelUserService.GetById(id);
+            var activeUser = this.hotelUserService.GetDataModelById(id);
 
-            var editActiveUserViewModel = new ActiveUserViewModel(activeUser.Id, activeUser.UserName, activeUser.FirstName,
+            var editActiveUserViewModel = new UserViewModel(activeUser.Id, activeUser.UserName, activeUser.FirstName,
                 activeUser.SecondName, activeUser.ThirdName, activeUser.UCN, activeUser.PhoneNumber, activeUser.Email,
-                activeUser.StartDate);
+                activeUser.StartDate, default(DateTime));
 
             return this.View(editActiveUserViewModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditActiveUser(ActiveUserViewModel activeUserViewModel)
+        public async Task<IActionResult> EditActiveUser(UserViewModel activeUserViewModel)
         {
-            this.hotelUserService.Edit(activeUserViewModel.Id, activeUserViewModel.Username, activeUserViewModel.FirstName,
-                 activeUserViewModel.SecondName, activeUserViewModel.ThirdName, activeUserViewModel.UCN, activeUserViewModel.PhoneNumber,
-                 activeUserViewModel.Email, activeUserViewModel.StartDate, default(DateTime));
-
+            this.hotelUserService.Edit(activeUserViewModel);
             return this.RedirectToAction("ActiveList", "HotelUser");
         }
 
@@ -68,9 +93,9 @@ namespace HotelReservationManager.Web.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditBlockedUser(string id)
         {
-            var blockedUser = this.hotelUserService.GetById(id);
+            var blockedUser = this.hotelUserService.GetDataModelById(id);
 
-            var editActiveUserViewModel = new BlockedUserViewModel(blockedUser.Id, blockedUser.UserName, blockedUser.FirstName,
+            var editActiveUserViewModel = new UserViewModel(blockedUser.Id, blockedUser.UserName, blockedUser.FirstName,
                 blockedUser.SecondName, blockedUser.ThirdName, blockedUser.UCN, blockedUser.PhoneNumber, blockedUser.Email,
                 blockedUser.StartDate, blockedUser.EndDate);
 
@@ -79,12 +104,9 @@ namespace HotelReservationManager.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditBlockedUser(BlockedUserViewModel blockedUserViewModel)
+        public async Task<IActionResult> EditBlockedUser(UserViewModel blockedUserViewModel)
         {
-            this.hotelUserService.Edit(blockedUserViewModel.Id, blockedUserViewModel.Username, blockedUserViewModel.FirstName,
-                blockedUserViewModel.SecondName, blockedUserViewModel.ThirdName, blockedUserViewModel.UCN, blockedUserViewModel.PhoneNumber,
-                blockedUserViewModel.Email, blockedUserViewModel.StartDate, blockedUserViewModel.EndDate);
-
+            this.hotelUserService.Edit(blockedUserViewModel);
             return this.RedirectToAction("BlockedList", "HotelUser");
         }
 
@@ -92,7 +114,6 @@ namespace HotelReservationManager.Web.Controllers
         public async Task<IActionResult> Block(string id)
         {
             this.hotelUserService.Block(id);
-
             return this.RedirectToAction("BlockedList", "HotelUser");
         }
 
@@ -100,72 +121,26 @@ namespace HotelReservationManager.Web.Controllers
         public async Task<IActionResult> Activate(string id)
         {
             this.hotelUserService.Activate(id);
-
             return this.RedirectToAction("ActiveList", "HotelUser");
         }
 
-        [HttpGet]
-        public JsonResult SearchActiveUsers(string term)
+        private IEnumerable<UserViewModel> SearchUsers(string term)
         {
-            var activeUsers = new List<ActiveUserViewModel>();
+            IEnumerable<UserViewModel> foundUsers = this.users;
 
-            foreach (var activeUser in this.hotelUserService.GetAllActive())
-            {
-                var role = userManager.GetRolesAsync(activeUser).Result;
-
-                var activeUserViewModel = new ActiveUserViewModel(activeUser.Id, activeUser.UserName, activeUser.FirstName,
-                    activeUser.SecondName, activeUser.ThirdName, activeUser.UCN, activeUser.PhoneNumber, activeUser.Email,
-                    activeUser.StartDate, role[0]);
-
-                activeUsers.Add(activeUserViewModel);
-            }
-
-            activeUsers.OrderBy(x => x.Role == "Admin");
-
-            if (term != null)
+            if (!String.IsNullOrEmpty(term))
             {
                 term = term.ToLower();
 
-                activeUsers = activeUsers
+                foundUsers = this.users
+                    .OrderBy(x => x.Role)
                     .Where(x => x.Username.ToLower().Contains(term)
                     || x.FirstName.ToLower().Contains(term)
                     || x.SecondName.ToLower().Contains(term)
-                    || x.ThirdName.ToLower().Contains(term))
-                    .ToList();
+                    || x.ThirdName.ToLower().Contains(term));
             }
 
-            return Json(activeUsers);
-        }
-
-        [HttpGet]
-        public JsonResult SearchBlockedUsers(string term)
-        {
-            var blockedUsers = new List<BlockedUserViewModel>();
-
-            foreach (var blockedUser in this.hotelUserService.GetAllBlocked())
-            {
-                var role = userManager.GetRolesAsync(blockedUser).Result;
-
-                var blockedserViewModel = new BlockedUserViewModel(blockedUser.Id, blockedUser.UserName, blockedUser.FirstName,
-                    blockedUser.SecondName, blockedUser.ThirdName, blockedUser.UCN, blockedUser.PhoneNumber, blockedUser.Email,
-                    blockedUser.StartDate, blockedUser.EndDate, role[0]);
-
-                blockedUsers.Add(blockedserViewModel);
-            }
-
-            if (term != null)
-            {
-                term = term.ToLower();
-
-                blockedUsers = blockedUsers
-                    .Where(x => x.Username.ToLower().Contains(term)
-                    || x.FirstName.ToLower().Contains(term)
-                    || x.SecondName.ToLower().Contains(term)
-                    || x.ThirdName.ToLower().Contains(term))
-                    .ToList();
-            }
-
-            return Json(blockedUsers);
+            return foundUsers;
         }
     }
 }

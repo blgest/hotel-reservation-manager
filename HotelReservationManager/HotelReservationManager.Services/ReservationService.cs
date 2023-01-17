@@ -1,10 +1,12 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using HotelReservationManager.ViewModels.ReservationViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace HotelReservationManager.Services
@@ -42,24 +44,23 @@ namespace HotelReservationManager.Services
             return (childrensCount * room.PriceOnBedChildren + adultsCount * room.PriceOnBedAdult) * time;
         }
 
-        public void Create(Room room, HotelUser hotelUser, int adultsCount, int childrensCount, DateTime startDate, DateTime endDate,
-            bool breakfast, bool allInclusive, double price, RoomType roomType)
+        public void Create(CreateReservationViewModel createReservationViewModel)
         {
-            room.IsFree = false;
+            createReservationViewModel.Room.IsFree = false;
 
             var reservation = new Reservation()
             {
                 Id = Guid.NewGuid().ToString(),
-                Room = room,
-                User = hotelUser,
-                RoomType = roomType,
-                AdultsCount = adultsCount,
-                ChildrensCount = childrensCount,
-                StartDate = startDate,
-                EndDate = endDate,
-                Breakfast = breakfast,
-                AllInclusive = allInclusive,
-                Price = price
+                Room = createReservationViewModel.Room,
+                User = createReservationViewModel.User,
+                RoomType = createReservationViewModel.RoomType,
+                AdultsCount = createReservationViewModel.AdultsCount,
+                ChildrensCount = createReservationViewModel.ChildrensCount,
+                StartDate = createReservationViewModel.StartDate,
+                EndDate = createReservationViewModel.EndDate,
+                Breakfast = createReservationViewModel.Breakfast,
+                AllInclusive = createReservationViewModel.AllInclusive,
+                Price = createReservationViewModel.Price
             };
 
             this.dbContext.Add(reservation);
@@ -69,7 +70,7 @@ namespace HotelReservationManager.Services
 
         public void Delete(string reservationId)
         {
-            var reservation = GetById(reservationId);
+            var reservation = GetDataModelById(reservationId);
 
             RemoveClients(reservation);
             reservation.Room.IsFree = true;
@@ -81,7 +82,7 @@ namespace HotelReservationManager.Services
         public void Edit(string id, DateTime startDate, DateTime endDate, int adultsCount,
             int childrensCount, RoomType roomType, Room room, bool breakfast, bool allInclusive, double price)
         {
-            var reservation = GetById(id);
+            var reservation = GetDataModelById(id);
 
             reservation.Room = room;
             reservation.StartDate = startDate;
@@ -96,13 +97,14 @@ namespace HotelReservationManager.Services
             reservation.RoomType = roomType;
             reservation.Breakfast = breakfast;
             reservation.AllInclusive = allInclusive;
+            reservation.Price = price;
 
             this.dbContext.SaveChanges();
         }
 
         public void AddClients(List<Client> clients, string reservationId)
         {
-            var reservation = GetById(reservationId);
+            var reservation = GetDataModelById(reservationId);
 
             foreach (var client in clients)
             {
@@ -121,27 +123,22 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<Reservation> GetAll()
+        public List<ReservationViewModel> GetAll()
         {
             return this.dbContext.Reservations
                 .Include(x => x.Room)
                 .Include(x => x.User)
                 .Include(x => x.ClientsReservations)
                 .OrderBy(x => x.StartDate)
-                .ThenBy(x => x.EndDate);
-        }
-
-        public Reservation GetById(string id)
-        {
-            var reservations = this.dbContext.Reservations
-                .Include(x => x.User)
-                .Include(x => x.Room)
-                .Include(x => x.ClientsReservations)
+                .ThenBy(x => x.EndDate)
+                .Select(x => ToViewModel(x))
                 .ToList();
-
-            return reservations.FirstOrDefault(x => x.Id == id);
         }
 
+        public Reservation GetDataModelById(string id)
+        {
+            return this.dbContext.Reservations.FirstOrDefault(x=>x.Id == id);
+        }
 
         private void RemoveClients(Reservation reservation)
         {
@@ -153,6 +150,13 @@ namespace HotelReservationManager.Services
             }
 
             reservation.ClientsReservations = new List<ClientReservations>();
+        }
+
+        private static ReservationViewModel ToViewModel(Reservation reservation)
+        {
+            return new ReservationViewModel(reservation.Id, reservation.User, reservation.StartDate, reservation.EndDate,
+                reservation.AdultsCount, reservation.ChildrensCount, reservation.RoomType, reservation.Room, reservation.Breakfast,
+                reservation.AllInclusive, reservation.Price, reservation.ClientsReservations.Count);
         }
     }
 }

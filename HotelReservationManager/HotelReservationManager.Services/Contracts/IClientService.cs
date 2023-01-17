@@ -1,21 +1,22 @@
 ﻿using HotelReservationManager.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using HotelReservationManager.ViewModels;
+using HotelReservationManager.ViewModels.ClientViewModels;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace HotelReservationManager.Services.Contracts
 {
     public interface IClientService
     {
-        void Create(string firstName, string thirdName,string phoneNumber, string email, int years);
+        void Create(CreateClientViewModel createClientViewModel);
 
         void Delete(string clientId);
 
-        void Edit(string id, string firstName, string thirdName, string phoneNumber,
-            string email, bool isAdult);
+        void Edit(ClientViewModel clientViewModel);
 
-        IEnumerable<Client> GetAll();
+        List<ClientViewModel> GetAll();
 
-        Client GetById(string id);
+        Client GetDataModelById(string id);
     }
 }

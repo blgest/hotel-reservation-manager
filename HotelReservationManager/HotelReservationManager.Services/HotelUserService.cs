@@ -1,6 +1,8 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using HotelReservationManager.ViewModels.UserViewModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,11 @@ namespace HotelReservationManager.Services
     public class HotelUserService : IHotelUserService
     {
         private HotelReservationManagerDbContext dbContext;
-
-        public HotelUserService(HotelReservationManagerDbContext dbContext)
+        private static UserManager<HotelUser> userManager;
+        public HotelUserService(HotelReservationManagerDbContext dbContext, UserManager<HotelUser> userManager)
         {
             this.dbContext = dbContext;
+            HotelUserService.userManager = userManager;
         }
 
         public bool AreThereAnyUsers()
@@ -23,7 +26,7 @@ namespace HotelReservationManager.Services
 
         public void Block(string hotelUserId)
         {
-            var currUser = GetById(hotelUserId);
+            var currUser = GetDataModelById(hotelUserId);
 
             currUser.IsActive = false;
             currUser.EndDate = DateTime.UtcNow;
@@ -33,7 +36,7 @@ namespace HotelReservationManager.Services
 
         public void Activate(string hotelUserId)
         {
-            var currUser = GetById(hotelUserId);
+            var currUser = GetDataModelById(hotelUserId);
 
             currUser.IsActive = true;
 
@@ -44,20 +47,19 @@ namespace HotelReservationManager.Services
         }
 
 
-        public void Edit(string id, string username, string firstName, string secondName,
-            string thirdName, string ucn, string phoneNumber, string email, DateTime startDate, DateTime endDate)
+        public void Edit(UserViewModel user)
         {
-            var hotelUser = GetById(id);
+            var hotelUser = GetDataModelById(user.Id);
 
-            hotelUser.UserName = username;
-            hotelUser.FirstName = firstName;
-            hotelUser.SecondName = secondName;
-            hotelUser.ThirdName = thirdName;
-            hotelUser.UCN = ucn;
-            hotelUser.PhoneNumber = phoneNumber;
-            hotelUser.Email = email;
-            hotelUser.StartDate = startDate;
-            hotelUser.EndDate = endDate;
+            hotelUser.UserName = user.Username;
+            hotelUser.FirstName = user.FirstName;
+            hotelUser.SecondName = user.SecondName;
+            hotelUser.ThirdName = user.ThirdName;
+            hotelUser.UCN = user.UCN;
+            hotelUser.PhoneNumber = user.PhoneNumber;
+            hotelUser.Email = user.Email;
+            hotelUser.StartDate = user.StartDate;
+            hotelUser.EndDate = user.EndDate;
 
             dbContext.SaveChanges();
         }
@@ -71,37 +73,30 @@ namespace HotelReservationManager.Services
             return hotelUser;
         }
 
-        public IEnumerable<HotelUser> GetAllActive()
+        public List<UserViewModel> GetAll()
         {
-            var actives = this.dbContext
+            return this.dbContext
                 .Users
-                .Where(x => x.IsActive == true)
                 .OrderBy(x => x.UserName)
                 .ThenBy(x => x.FirstName)
                 .ThenBy(x => x.SecondName)
                 .ThenBy(x => x.ThirdName)
+                .Select(x => ToViewModel(x))
                 .ToList();
-
-            return actives;
         }
 
-        public IEnumerable<HotelUser> GetAllBlocked()
-        {
-            var blocked = this.dbContext
-                 .Users
-                 .Where(x => x.IsActive == false)
-                 .OrderBy(x => x.UserName)
-                 .ThenBy(x => x.FirstName)
-                 .ThenBy(x => x.SecondName)
-                 .ThenBy(x => x.ThirdName)
-                 .ToList();
-
-            return blocked;
-        }
-
-        public HotelUser GetById(string id)
+        public HotelUser GetDataModelById(string id)
         {
             return this.dbContext.Users.Find(id);
+        }
+
+        private static UserViewModel ToViewModel(HotelUser hotelUser)
+        {
+            var role = userManager.GetRolesAsync(hotelUser).Result[0];
+
+            UserViewModel userViewModel = new UserViewModel(hotelUser.Id, hotelUser.UserName, hotelUser.SecondName, hotelUser.SecondName,
+                hotelUser.ThirdName, hotelUser.UCN, hotelUser.PhoneNumber, hotelUser.Email, hotelUser.StartDate, hotelUser.EndDate, role);
+            return userViewModel;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
+using HotelReservationManager.ViewModels.RoomViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,16 @@ namespace HotelReservationManager.Services
         }
 
 
-        public void Create(int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number)
+        public void Create(CreateRoomViewModel createRoomViewModel)
         {
             var newRoom = new Room(
                 Guid.NewGuid().ToString(),
-                capacity,
-                type,
+                createRoomViewModel.Capacity,
+                createRoomViewModel.Type,
                 true,
-                priceOnBedAdult,
-                priceOnBedChildren,
-                number);
+                createRoomViewModel.PriceOnBedForAdult,
+                createRoomViewModel.PriceOnBedForChildren,
+                createRoomViewModel.Number);
 
             this.dbContext.Rooms.Add(newRoom);
             this.dbContext.SaveChanges();
@@ -36,9 +37,9 @@ namespace HotelReservationManager.Services
 
         public void Delete(string roomId)
         {
-            var room = GetById(roomId);
+            var room = GetDataModelById(roomId);
 
-            foreach (var reservation in this.dbContext.Reservations.Include(x=>x.Room).Include(x=>x.ClientsReservations))
+            foreach (var reservation in this.dbContext.Reservations.Include(x => x.Room).Include(x => x.ClientsReservations))
             {
                 if (reservation.Room == room)
                 {
@@ -57,35 +58,38 @@ namespace HotelReservationManager.Services
             this.dbContext.SaveChanges();
         }
 
-        public void Edit(string id, int capacity, RoomType type, double priceOnBedAdult, double priceOnBedChildren, int number)
+        public void Edit(RoomViewModel roomViewModel)
         {
-            var room = GetById(id);
+            var room = GetDataModelById(roomViewModel.Id);
 
-            room.Id = id;
-            room.Capacity = capacity;
-            room.Type = type;
-            room.PriceOnBedAdult = priceOnBedAdult;
-            room.PriceOnBedChildren = priceOnBedChildren;
-            room.Number = number;
+            room.Id = roomViewModel.Id;
+            room.Capacity = roomViewModel.Capacity;
+            room.Type = roomViewModel.Type;
+            room.PriceOnBedAdult = roomViewModel.PriceOnBedForAdult;
+            room.PriceOnBedChildren = roomViewModel.PriceOnBedForChildren;
+            room.Number = roomViewModel.Number;
 
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<Room> GetAll()
+        public List<RoomViewModel> GetAll()
         {
             return this.dbContext.Rooms
                 .OrderBy(x => x.Number)
                 .ThenBy(x => x.Type)
                 .ThenBy(x => x.Capacity)
+                .Select(x => ToViewModel(x))
                 .ToList();
         }
 
-        public IEnumerable<Room> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type)
+        public List<RoomViewModel> GetAllFreeRoomsByRequirments(DateTime startDate, DateTime endDate, int capacity, RoomType type)
         {
-            var rooms = new List<Room>();
+            var rooms = new List<RoomViewModel>();
 
             rooms = this.dbContext.Rooms
                 .Where(r => r.Capacity >= capacity && r.Type == type)
+                .OrderBy(x => x.Number)
+                .Select(x => ToViewModel(x))
                 .ToList();
 
             foreach (var reservation in this.dbContext.Reservations)
@@ -94,23 +98,28 @@ namespace HotelReservationManager.Services
                 {
                     if (!CheckForPreviosDate(reservation.StartDate, startDate, endDate))
                     {
-                        rooms.Remove(reservation.Room);
+                        rooms.Remove(ToViewModel(reservation.Room));
                     }
                 }
                 else if (startDate > reservation.StartDate)
                 {
                     if (!CheckForNextDate(startDate, reservation.StartDate, reservation.EndDate))
                     {
-                        rooms.Remove(reservation.Room);
+                        rooms.Remove(ToViewModel(reservation.Room));
                     }
                 }
                 else
                 {
-                    rooms.Remove(reservation.Room);
+                    rooms.Remove(ToViewModel(reservation.Room));
                 }
             }
 
             return rooms;
+        }
+
+        public Room GetDataModelById(string id)
+        {
+            return this.dbContext.Rooms.Find(id);
         }
 
         private bool CheckForNextDate(DateTime k, DateTime x, DateTime y)
@@ -123,9 +132,9 @@ namespace HotelReservationManager.Services
             return k < x && z <= x;
         }
 
-        public Room GetById(string id)
+        private static RoomViewModel ToViewModel(Room room)
         {
-            return this.dbContext.Rooms.Find(id);
+            return new RoomViewModel(room.Id, room.Capacity, room.Type, room.PriceOnBedAdult, room.PriceOnBedChildren, room.Number);
         }
     }
 }

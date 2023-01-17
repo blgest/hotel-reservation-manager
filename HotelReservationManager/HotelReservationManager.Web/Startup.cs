@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace HotelReservationManager.Web
 {
@@ -32,8 +33,9 @@ namespace HotelReservationManager.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HotelReservationManagerDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<HotelUser, IdentityRole>(options =>
             {

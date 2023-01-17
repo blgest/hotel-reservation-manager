@@ -1,4 +1,5 @@
 ﻿using HotelReservationManager.Data.Models;
+using HotelReservationManager.ViewModels.ReservationViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -8,20 +9,19 @@ namespace HotelReservationManager.Services.Contracts
     {
         void CheckForExpiredReservations();
 
-        void Create(Room room, HotelUser hotelUser, int adultsCount, int childrensCount, DateTime startDate, DateTime endDate,
-            bool breakfast, bool allInclusive, double price, RoomType roomType);
+        void Create(CreateReservationViewModel createReservationViewModel);
 
         double CalculatePrice(int childrensCount, int adultsCount, Room room, DateTime startDate, DateTime endDate);
 
-        void Edit(string id, DateTime startDate, DateTime endDate, int adultsCount, int childrensCount,
-            RoomType roomType, Room room, bool breakfast, bool allInclusive, double price);
+        void Edit(string id, DateTime startDate, DateTime endDate, int adultsCount,
+            int childrensCount, RoomType roomType, Room room, bool breakfast, bool allInclusive, double price);
 
         void Delete(string reservationId);
 
         void AddClients(List<Client> clients, string reservationId);
 
-        IEnumerable<Reservation> GetAll();
+        List<ReservationViewModel> GetAll();
 
-        Reservation GetById(string id);
+        Reservation GetDataModelById(string id);
     }
 }
