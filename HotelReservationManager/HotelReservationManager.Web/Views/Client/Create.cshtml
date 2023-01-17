@@ -1,4 +1,4 @@
-﻿@model HotelReservationManager.ViewModels.ClientViewModels.CreateClientViewModel
+﻿@model HotelReservationManager.ViewModels.ClientViewModels.ClientViewModel
 
 <div class="container">
     <h1 class="mt-4 mb-3">Create Client</h1>
@@ -17,9 +17,9 @@
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ThirdName">Third Name</label>
-            <input asp-for="ThirdName" class="form-control" value="">
-            <span asp-validation-for="ThirdName" class="text-danger"></span>
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" class="form-control" value="">
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="PhoneNumber">Phone Number</label>
@@ -32,9 +32,9 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Years">Years</label>
-            <input asp-for="Years" class="form-control" value="">
-            <span asp-validation-for="Years" class="text-danger"></span>
+            <label asp-for="Birthdate">Birthdate</label>
+            <input asp-for="Birthdate" type="date" class="form-control" id="startDate" value="">
+            <span asp-validation-for="Birthdate" class="text-danger"></span>
         </div>
         <hr>
         <div class="button-holder mt-2 d-flex w-25 mx-auto justify-content-between">
@@ -47,3 +47,8 @@
 
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    var startDt = document.getElementById("startDate");
+    startDt.valueAsDate = new Date();
+</script>

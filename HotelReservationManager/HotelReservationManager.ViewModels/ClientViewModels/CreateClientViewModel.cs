@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HotelReservationManager.ViewModels.ClientViewModels
 {
@@ -18,9 +19,9 @@ namespace HotelReservationManager.ViewModels.ClientViewModels
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Must be entered true or false")]
-        [Range(0, int.MaxValue, ErrorMessage = "Only positive number allowed")]
-        public int Years { get; set; }
+        [Required(ErrorMessage = "Must be entered some Date of birth")]
+        [DataType(DataType.DateTime)]
+        public DateTime Birthdate { get; set; }
     }
 }
 

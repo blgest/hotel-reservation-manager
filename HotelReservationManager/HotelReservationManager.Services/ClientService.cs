@@ -1,13 +1,10 @@
-﻿using HotelReservationManager.Data;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using HotelReservationManager.Data;
 using HotelReservationManager.Data.Models;
 using HotelReservationManager.Services.Contracts;
-using HotelReservationManager.ViewModels;
 using HotelReservationManager.ViewModels.ClientViewModels;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HotelReservationManager.Services
 {
@@ -20,15 +17,16 @@ namespace HotelReservationManager.Services
             this.dbContext = dbContext;
         }
 
-        public void Create(CreateClientViewModel createClientViewModel)
+        public void Create(ClientViewModel clientViewModel)
         {
             var newClient = new Client(
                 Guid.NewGuid().ToString(),
-                createClientViewModel.FirstName,
-                createClientViewModel.ThirdName,
-                createClientViewModel.PhoneNumber,
-                createClientViewModel.Email,
-                createClientViewModel.Years > 18 ? true : false);
+                clientViewModel.FirstName,
+                clientViewModel.LastName,
+                clientViewModel.PhoneNumber,
+                clientViewModel.Email,
+                CalculateAge(clientViewModel.Birthdate) > 18 ? true : false,
+                clientViewModel.Birthdate);
 
             this.dbContext.Clients.Add(newClient);
             this.dbContext.SaveChanges();
@@ -55,10 +53,11 @@ namespace HotelReservationManager.Services
             var client = GetDataModelById(clientViewModel.Id);
 
             client.FirstName = clientViewModel.FirstName;
-            client.ThirdName = clientViewModel.ThirdName;
-            client.Telephone = clientViewModel.PhoneNumber;
+            client.LastName = clientViewModel.LastName;
+            client.PhoneNumber = clientViewModel.PhoneNumber;
             client.Email = client.Email;
-            client.IsAdult = clientViewModel.IsAdult;
+            client.Birthdate = clientViewModel.Birthdate;
+            client.IsAdult = CalculateAge(clientViewModel.Birthdate) > 18 ? true : false;
 
             this.dbContext.SaveChanges();
         }
@@ -67,7 +66,7 @@ namespace HotelReservationManager.Services
         {
             return this.dbContext.Clients
                 .OrderBy(x => x.FirstName)
-                .ThenBy(x => x.ThirdName)
+                .ThenBy(x => x.LastName)
                 .Select(x => ToViewModel(x))
                 .ToList();
         }
@@ -79,7 +78,23 @@ namespace HotelReservationManager.Services
 
         private static ClientViewModel ToViewModel(Client client)
         {
-            return new ClientViewModel(client.Id, client.FirstName, client.ThirdName, client.Telephone, client.Email, client.IsAdult);
+            return new ClientViewModel(client.Id, client.FirstName, client.LastName, client.PhoneNumber, client.Email, client.Birthdate);
+        }
+        private int CalculateAge(DateTime birthdate)
+        {
+            // Save today's date.
+            var today = DateTime.Today;
+
+            // Calculate the age.
+            var age = today.Year - birthdate.Year;
+
+            // Go back to the year in which the person was born in case of a leap year
+            if (birthdate.Date > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace HotelReservationManager.Data.Migrations
                     b.Property<string>("ReservationId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Telephone")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThirdName")

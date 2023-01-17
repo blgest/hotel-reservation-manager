@@ -24,7 +24,7 @@
             {
                 @foreach (var adult in Model.Adults)
                 {
-                    <input id="adults" class="form-control" value="@adult.FirstName @adult.ThirdName @adult.Telephone @adult.Email" readonly="readonly">
+                    <input id="adults" class="form-control" value="@adult.FirstName @adult.LastName @adult.PhoneNumber @adult.Email" readonly="readonly">
                     <p></p>
                 }
             }
@@ -40,7 +40,7 @@
             {
                 @foreach (var children in Model.Childrens)
                 {
-                    <input id="adults" class="form-control" value="@children.FirstName @children.ThirdName @children.Telephone @children.Email" readonly="readonly">
+                    <input id="adults" class="form-control" value="@children.FirstName @children.LastName @children.PhoneNumber @children.Email" readonly="readonly">
                     <p></p>
                 }
             }

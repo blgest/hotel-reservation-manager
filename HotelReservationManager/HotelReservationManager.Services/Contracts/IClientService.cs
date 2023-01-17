@@ -9,7 +9,7 @@ namespace HotelReservationManager.Services.Contracts
 {
     public interface IClientService
     {
-        void Create(CreateClientViewModel createClientViewModel);
+        void Create(ClientViewModel clientViewModel);
 
         void Delete(string clientId);
 

@@ -6,7 +6,6 @@ using HotelReservationManager.Services.Contracts;
 using HotelReservationManager.ViewModels.ClientViewModels;
 using HotelReservationManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservationManager.Web.Controllers
 {
@@ -24,15 +23,15 @@ namespace HotelReservationManager.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var createClientViewModel = new CreateClientViewModel();
-            return this.View(createClientViewModel);
+            var clientViewModel = new ClientViewModel();
+            return this.View(clientViewModel);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateClientViewModel createClientViewModel)
+        public async Task<IActionResult> Create(ClientViewModel clientViewModel)
         {
-            this.clientService.Create(createClientViewModel);
+            this.clientService.Create(clientViewModel);
             return this.RedirectToAction("List");
         }
 
@@ -58,7 +57,7 @@ namespace HotelReservationManager.Web.Controllers
 
                 foundClients = this.clients
                     .Where(x => x.FirstName.ToLower().Contains(searchString)
-                    || x.ThirdName.ToLower().Contains(searchString)).ToList();
+                    || x.LastName.ToLower().Contains(searchString)).ToList();
             }
 
             int pageSize = 5;

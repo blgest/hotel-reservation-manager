@@ -35,7 +35,7 @@ namespace HotelReservationManager.Data.Migrations
                     b.Property<bool>("IsAdult")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Telephone")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThirdName")
